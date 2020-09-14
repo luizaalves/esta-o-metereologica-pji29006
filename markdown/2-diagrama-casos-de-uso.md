@@ -1,3 +1,7 @@
 ### Diagrama de casos de uso
 
-![Diagrama](images/diagrama-casos-de-uso.png)
+***Sistema raspberry e sistema servidor***
+
+![Diagrama](images/diagrama-casos-de-uso-raspberry.png)
+
+![Diagrama](images/diagrama-casos-de-uso-servidor.png)

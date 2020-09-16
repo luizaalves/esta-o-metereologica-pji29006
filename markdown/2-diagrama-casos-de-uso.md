@@ -6,16 +6,14 @@
 
 1. Caso de uso : Qual caso de uso?
 
->
-*  Ator Primário:'Usuário'
-*  Ator Secundário:Sensor
-*  Requisito:RF.02
-*  Resumo:Visualizar os dados do sensor através do sistema
 
+>*  Ator Primário:'Usuário'
+>*  Ator Secundário:Sensor
+>*  Requisito:RF.02
+>*  Resumo:Visualizar os dados do sensor através do sistema
 
-Fluxo principal:
-                                            
-                                            
+**Fluxo principal:**
+                                                                                        
 *  Primeira descrição
 *  Segunda descrição
 

@@ -1,4 +1,6 @@
-### Casos de uso
+### Casos de uso 
+
+*Em construção*
 
 ***Descrição do sistema raspberry e sistema servidor***
 

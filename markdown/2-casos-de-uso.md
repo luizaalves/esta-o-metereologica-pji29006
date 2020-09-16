@@ -21,5 +21,5 @@
 | **Ações do ator**                           | **Ações do sistema**                                         |
 | 1. Digitar incorretamente o login e a senha |                                                              |
 |                                             | 2. Comunicar o usuário que os dados estão incorretos         |
-|                                             | Recusar pedido                                               |
+|                                             | 3. Recusar pedido                                            |
 

@@ -1,15 +1,15 @@
-### Casos de uso 
+###  Casos de uso - Leitura instantanea do sensor 
 
 *Em construção*
 
-***Descrição do sistema raspberry***
+***Descrição do caso de uso do sistema raspberry***
 
 | Nome do caso de uso | Leitura instantanea do sensor                                |
 | ------------------- | ------------------------------------------------------------ |
-| Ator principal      | Sistema servidor                                             |
-| Atores Secundários  | Admin, sensor                                                |
-| Resumo              | Esse caso de uso descreve as etapas percorridas para o <br/>sistema servidor obter a leitura instantanea do sensor. |
-| Pré-condições       | Estar conectado a uma rede wi-fi                             |
+| Ator principal      | Usuário                                                      |
+| Atores Secundários  | Sistema raspberry                                            |
+| Resumo              | Esse caso de uso descreve as etapas percorridas para o <br/>usuário obter a leitura instantanea do sensor. |
+| Pré-condições       | Estar conectado a uma rede wi-fi ou rede móvel               |
 
 **Fluxo principal**
 
@@ -17,8 +17,10 @@
 | ------------------------------------------ | ------------------------------------------------------------ |
 | 1. Efetuar o login com seu usuario e senha |                                                              |
 |                                            | 2. Validar acesso                                            |
-|                                            | 3. Enviar informações instantaneas da leitura do sensor      |
-| 4. Visualizar informações na tela          |                                                              |
+|                                            | 3. Exibe opções do sistema                                   |
+| 4. Seleciona a opção 'Leitura do sensor'   |                                                              |
+|                                            | 5. Enviar informações instantaneas da leitura do sensor      |
+| 6. Visualizar informações na tela          |                                                              |
 | **Restrições**                             | 1. O usuário precisa ter uma conta de acesso fornecida pelo admin. |
 
 **Fluxo de exceção**

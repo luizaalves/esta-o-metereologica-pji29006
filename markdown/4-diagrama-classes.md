@@ -8,6 +8,6 @@ Em construção
 
 ![Diagrama-classe-Rasp](images/diagrama-classes-raspberry.png)
 
-##### Diagrama de classes Raspberry
+##### Diagrama de classes Sistema Servidor
 
 ![Diagrama-classe-Server](images/diagrama-classes-servidor.png)

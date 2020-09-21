@@ -1,6 +1,5 @@
 ### Diagrama de classes
 
-Em construção
 
 ***Sistema raspberry e sistema servidor***
 

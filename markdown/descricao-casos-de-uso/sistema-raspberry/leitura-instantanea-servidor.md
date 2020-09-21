@@ -1,7 +1,5 @@
 ###  Casos de uso - Leitura instantanea do sensor 
 
-*Em construção*
-
 ***Descrição do caso de uso do sistema raspberry***
 
 | Nome do caso de uso | Leitura instantanea do sensor                                |

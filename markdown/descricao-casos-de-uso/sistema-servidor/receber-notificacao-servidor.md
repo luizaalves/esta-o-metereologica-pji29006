@@ -1,7 +1,5 @@
 ###  Casos de uso - Receber notificação 
 
-*Em construção*
-
 ***Descrição do caso de uso do sistema raspberry***
 
 | Nome do caso de uso | Receber notificação com a leitura periódica do sensor        |

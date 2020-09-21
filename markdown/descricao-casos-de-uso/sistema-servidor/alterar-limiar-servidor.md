@@ -1,7 +1,5 @@
 ### Casos de uso - Alterar limiar do sensor 
 
-*Em construção*
-
 ***Descrição do caso de uso do sistema servidor***
 
 | Nome do caso de uso | Alterar limiar do sensor                                     |

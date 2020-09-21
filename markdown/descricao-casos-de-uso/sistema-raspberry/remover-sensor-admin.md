@@ -1,7 +1,5 @@
 ### Casos de uso - Remover sensor 
 
-*Em construção*
-
 ***Descrição do caso de uso do sistema raspberry***
 
 | Nome do caso de uso | Remover sensor                                               |

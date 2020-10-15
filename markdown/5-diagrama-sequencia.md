@@ -2,7 +2,7 @@
 
 ***Sistema raspberry:***
 
-1. ​
+1. ​![LoginUser.](./images/diagrama-de-sequencia/sistema-raspberry/LeituraInstantaneaUser.png)
 
 ***Sistema servidor:***
 

@@ -5,6 +5,7 @@
 1. ​![LoginUser.](./images/diagrama-de-sequencia/sistema-raspberry/LeituraInstantaneaUser.png)
 2. ​![LoginAdmin.](./images/diagrama-de-sequencia/sistema-raspberry/LeituraInstantaneaAdmin.png)
 3. ​![AddSensor.](./images/diagrama-de-sequencia/sistema-raspberry/AdicionarSensor.png)
+4. ​![RemoverSensor.](./images/diagrama-de-sequencia/sistema-raspberry/RemoverSensor.png)
 
 
 ***Sistema servidor:***

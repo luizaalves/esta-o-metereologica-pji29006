@@ -3,10 +3,10 @@
 
 > ***Sistema raspberry e sistema servidor***
 
-##### Diagrama de classes Raspberry
+##### Diagrama de classes Estacação Metereológica
 
-![Diagrama-classe-Rasp](images/diagrama-classes-raspberry.png)
+![Diagrama-classe-Rasp](images/diagrama-classes-estacao.png)
 
 ##### Diagrama de classes Sistema Servidor
 
-![Diagrama-classe-Server](images/diagrama-classes-servidor.png)
+

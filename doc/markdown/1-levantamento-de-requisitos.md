@@ -1,40 +1,41 @@
 ## Levantamento de requisitos: ##
 ### Requisitos Funcionais (RF): ###
 
-**RF.01 -** Permitir Registro e Autenticação do cliente;
+**RF.01 -** Permitir que sejam inseridos módulos/drivers para novos sensores;
 
-**RF.02 -** Visualizar e Alterar dados dos sensores;
+**RF.02 -** Possibilitar a instalação de sensor(es);
 
-**RF.03 -** Possibilitar a leitura de dados dos sensores;
+**RF.03 -** Permitir cadastrar grandezas a serem medidas;
 
-**RF.04 -** Permitir a configuração dos sensores;
+**RF.04 -** Permitir a configuração do sensor e da grandeza a ser medida;
 
-**RF.05 -** Permitir a configuração dos limiares superiores e inferiores dos sensores;
+**RF.05 -** Possibilitar a configuração de limiar (inferior e superior) da grandeza medida pelo sensor;
 
-**RF.06 -** Avisar o cliente quando os limiares de algum sensor for alcançado;
+**RF.06 -** Gerar notificações de medidas;
 
-**RF.07 -** Possibilitar a realização de outras configurações;
+**RF.07 -**Permitir a leitura da grandeza medida pelo sensor; 
 
 **RF.08 -** Permitir multiplicidade de sensores;
 
-
 ### Requisitos não funcionais (RNF): ###
 
-**RNF.01 -** O cliente precisa estar conectado a internet;
+**RNF.01 -** As funcionalidades do sistema devem ser acessadas através de uma API REST;
 
-**RNF.02 -** Requerido uma Raspberry PI versão xxx;
-
-**RNF.03 -** Deve ser possível utilizar os seguintes sensores:
+**RNF.02 -** O sistema deve possuir módulos/drivers para os sensores:
     - BMP180
     - HDC1080
     - DHT11
     - Presença PIR 
 
+**RNF.03 -** O Sistema deve ser implementado em uma RaspBerry PI; 
 
 ### Regras de negócio (RN): ###
 
-**RN.01 -** Somente cliente com autenticação no sistema e conectado na internet poderá configurar os sensores e os limiares;
+**RN.01 -** Somente sensor com módulo/driver previamente inserido poderá ser instalado;
 
-**RN.02 -** A estação Raspberry PI tem que estar conectado no(s) sensor(es);
+**RN.02 -** Uma mesma grandeza poderá ser medida por mais de um sensor;
 
-**RN.03 -** A estação Raspberry PI tem que estar conectado na internet localhost.
+**RN.03 -** Poderá ser instalado mais de um sensor do mesmo tipo;
+
+**RN.04 -** As notificações só serão geradas para medidas que atingirem os limiares configurados; 
+

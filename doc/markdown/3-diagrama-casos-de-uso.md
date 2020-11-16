@@ -1,7 +1,7 @@
 ### Diagrama de casos de uso
 
-***Sistema raspberry e sistema servidor***
+***Sistema Estação Metereológica e Sistema Servidor***
 
-![Diagrama](images/diagrama-casos-de-uso-raspberry.png)
+![Diagrama](images/UseCase_estacao.png)
 
-![Diagrama](images/diagrama-casos-de-uso-servidor.png)
+![Diagrama](images/UseCase_servidor.png)

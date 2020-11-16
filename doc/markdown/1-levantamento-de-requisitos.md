@@ -13,7 +13,7 @@
 
 **RF.06 -** Gerar notificações de medidas;
 
-**RF.07 -**Permitir a leitura da grandeza medida pelo sensor; 
+**RF.07 -** Permitir a leitura da grandeza medida pelo sensor; 
 
 **RF.08 -** Permitir multiplicidade de sensores;
 

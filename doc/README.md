@@ -9,7 +9,6 @@
 2. [Descrição dos casos de uso.](./markdown/2-descricao-casos-de-uso.md)
 2. [Diagrama de casos de uso.](./markdown/3-diagrama-casos-de-uso.md)
 4. [Diagrama de classes.](./markdown/4-diagrama-classes.md)
-5. [Diagrama de sequência.](./markdown/5-diagrama-sequencia.md)
 
 **Utilização Sistema Estação**
 1. [Como configurar um novo Sensor.]()

@@ -1,6 +1,6 @@
 **Caso de uso**: Cadastrar Grandeza
 
-**Identificador**: CSU03
+**Identificador**: CSU02
 
 **Requisito**: RF.03
 

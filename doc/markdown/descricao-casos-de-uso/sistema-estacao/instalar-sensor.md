@@ -1,6 +1,6 @@
 **Caso de uso**: Instalar Sensor
 
-**Identificador**: CSU02
+**Identificador**: CSU03
 
 **Requisito**: RF.02
 

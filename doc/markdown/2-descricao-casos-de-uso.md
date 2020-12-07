@@ -1,6 +1,8 @@
-### Descrição dos casos de uso
+## Descrição dos casos de uso
 
-***Sistema Estação Meteorológica:***
+---
+
+#### Sistema Estação Meteorológica
 
 ***Atores***
 
@@ -11,8 +13,8 @@
 **Sistema Servidor**: Sistema responsável pela interface WEB. 
 
 1. [Inserir Módulo (CSU01)](./descricao-casos-de-uso/sistema-estacao/inserir-modulo.md)
-2. [Instalar Sensor (CSU02)](./descricao-casos-de-uso/sistema-estacao/instalar-sensor.md)
-3. [Cadastrar Grandeza (CSU03)](./descricao-casos-de-uso/sistema-estacao/cadastrar-grandeza.md)
+2. [Cadastrar Grandeza (CSU02)](./descricao-casos-de-uso/sistema-estacao/cadastrar-grandeza.md)
+3. [Instalar Sensor (CSU03)](./descricao-casos-de-uso/sistema-estacao/instalar-sensor.md)
 4. [Configurar Sensor (CSU04)](./descricao-casos-de-uso/sistema-estacao/configurar-sensor.md)
 5. [Configurar Limiar (CSU05)](./descricao-casos-de-uso/sistema-estacao/configurar-limiar.md)
 6. [Configurar Grandeza (CSU06)](./descricao-casos-de-uso/sistema-estacao/configurar-grandeza.md)
@@ -20,8 +22,9 @@
 8. [Ler Medida Atual (CSU08)](./descricao-casos-de-uso/sistema-estacao/ler-medida-atual.md)
 7. [Gerar Notificação (CSU09)](./descricao-casos-de-uso/sistema-estacao/gerar-notificacao.md)
 
+---
 
-***Sistema servidor:***
+### Sistema servidor
 
 ***Atores***
 

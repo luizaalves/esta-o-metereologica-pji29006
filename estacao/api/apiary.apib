@@ -1,0 +1,310 @@
+FORMAT: 1A
+HOST: http://localhost:5000/api/v1
+
+# Administração do Sistema Estação
+
+API REST para efetuar a administração do Sistema Estação Metereológica localmente. 
+
+# Group Modules
+
+## Módulos [/modules]
+### Listar todos os módulos instalados na Rasp [GET]
++ Response 200 (application/json)
+    + Attributes
+        - modules (array[Module])
+
+### Inserir novo módulo na Rasp [POST]
++ Request (application/json)
+    + Attributes
+        - module (Module)
+
++ Response 201 (application/json)
+    + Headers
+        
+            Location: /modules/mDHT
+
+    + Body
+
++ Response 400 (application/json)
+    + Attributes
+        - error (BadRequestError Module)
+
++ Response 409 (application/json)
+    + Attributes
+        - error (ConflictError Module)
+
++ Response 500 (application/json)
+    + Attributes
+        - error (InternalServerError Module)
+
+### Atualizar informações de um Módulo [PUT]
++ Request (application/json)
+    + Attributes
+        - module (Module)
++ Response 204
++ Response 400 (application/json)
+    + Attributes
+        - error (BadRequestError Module)
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Module)
+
+## Módulo [/modules/{id_module}]
++ Parameters
+    + id_module: mDHT (string) - Identificador do Módulo.
+
+### Listar informações de um módulo [GET]
++ Response 200 (application/json)
+    + Attributes
+        - module (Module)
+
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Module)
+
+# Group Grandezas
+
+## Gradezas [/grandezas]
+### Listar todas as Grandezas cadastradas no Sistema [GET]
++ Response 200 (application/json)
+    + Attributes
+        - grandezas (array[Grandeza])
+
+### Inserir nova Grandeza no Sistema [POST]
++ Request (application/json)
+    + Attributes
+        - grandeza (Grandeza)
+
++ Response 201 (application/json)
+    + Headers
+        
+            Location: /grandeza/temperatura
+
+    + Body
+
++ Response 400 (application/json)
+    + Attributes
+        - error (BadRequestError Grandeza)
+
++ Response 409 (application/json)
+    + Attributes
+        - error (ConflictError Grandeza)
+
+### Atualizar informações de uma Grandeza [PUT]
++ Request (application/json)
+    + Attributes
+        - grandeza (Grandeza)
++ Response 204
++ Response 400 (application/json)
+    + Attributes
+        - error (BadRequestError Grandeza)
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Grandeza)
+
++ Response 409 (application/json)
+    + Attributes
+        - error (ConflictError Grandeza)
+
+## Grandeza [/grandezas/{type}]
++ Parameters
+    + type: temperatura (string) - Tipo da Grandeza.
+
+### Listar informações da Grandeza [GET]
++ Response 200 (application/json)
+    + Attributes
+        - grandeza (Grandeza)
+
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Grandeza)
+
+# Group Sensores
+
+## Sensores [/sensors]
+### Listar todos os Sensores instalados na Rasp [GET]
++ Response 200 (application/json)
+    + Attributes
+        - sensores (array[Sensor])
+
+### Inserir novo Sensor na Rasp [POST]
++ Request (application/json)
+    + Attributes
+        - sensor (Sensor)
+
++ Response 201 (application/json)
+    + Headers
+        
+            Location: /sensors/dht11estufa/medidas
+
+    + Body
+
++ Response 400 (application/json)
+    + Attributes
+        - error (BadRequestError Sensor)
+
++ Response 409 (application/json)
+    + Attributes
+        - error (ConflictError Sensor)
+
++ Response 500 (application/json)
+    + Attributes
+        - error (InternalServerError Sensor)
+
+### Atualizar informações de um Sensor [PUT]
++ Request (application/json)
+    + Attributes
+        - module (Sensor)
++ Response 204
++ Response 400 (application/json)
+    + Attributes
+        - error (BadRequestError Sensor)
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Sensor)
+
+## Sensor [/sensors/{id_sensor}]
++ Parameters
+    + id_sensor: dht11estufa (string) - Identificador do Sensor.
+
+### Listar informações de um Sensor [GET]
++ Response 200 (application/json)
+    + Attributes
+        - sensor (Sensor)
+
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Sensor)
+
+## Leitura [/sensors/{id_sensor}/medidas]
++ Parameters
+    + id_sensor: dht11estufa (string) - Identificador do Sensor.
+
+### Executar Leitura atual da grandeza medida pelo Sensor [GET]
++ Response 200 (application/json)
+    + Attributes
+        - medida (Medida)
+
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Medida)
+
++ Response 500 (application/json)
+    + Attributes
+        - error (InternalServerError Medida)
+
+## Limiar [/sensors/{id_sensor}/limiar]
++ Parameters
+    + id_sensor: dht11estufa (string) - Identificador do Sensor.
+
+### Executar configuração dos Limiares das Gradezas medidas pelo Sensor [GET]
++ Response 200 (application/json)
+    + Attributes
+        - limiar (Limiar)
+
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Limiar)
+
+# Data Structures
+
+## Module (object)
++ `id_module`: `mDHT` (string, required) - Identificador do módulo de um tipo de sensor.
++ `description`: `Módulo para sensor DHT11` (string) - Descrição do Módulo
++ `url_codigo_fonte`: `http://example.com/DHT.py` (string,required) - URL para download do código fonte do módulo.
+
+## Sensor (object)
++ `id_sensor`: `dht11estufa` (string, required) - Identificador do Sensor.
++ `description`: `Sensor de temperatura da estufa` (string) - Descrição do Sensor.
++ `type_grandeza`: `temperatura` (string, required) - Tipo de Grandeza medida pelo Sensor
++ `id_module`: `mDHT` (string, required) - Identificador do módulo utilizado.
+
+## Grandeza (object)
++ `type`: `Temperatura` (string, required) - Tipo da Grandeza.
++ `unit`: `° Celsius` (string, required) - Unidade da Grandeza.
+
+## Medida (object)
++ `value`: `35` (number) - Valor da Grandeza medida no sensor.
++ Include Grandeza
++ `id_sensor`: `dht11estufa` (string, required) - Identificador do sensor da medida.
+
+## Limiar (object)
++ `value_min`: 30 (number, required) - Limite mínimo de uma Medida.
++ `value_max`: 37 (number, required) - Liminte máximo de uma Medida.
++ `id_sensor`: `dht11estufa` (string, required) - Identificador do sensor que será configurado os Limiares.
+
+## NotFound Error (object)
++ `code`: 404 (number) - Status code.
++ `message`: `NOT FOUND` (string) - Mensagem de erro.
+
+## BadRequest Error (object)
++ `code`: 400 (number) - Status code.
++ `message`: `BAD REQUEST` (string) - Mensagem de erro.
+
+## Conflict Error (object)
++ `code`: 409 (number) - Status code.
++ `message`: `CONFLICT` (string) - Mensagem de erro.
+
+## InternalServer Error (object)
++ `code`: 500 (number) - Status code.
++ `message`: `INTERNAL SERVER ERROR` (string) - Mensagem de erro. 
+
+## BadRequestError Module (object)
++ Include BadRequest Error
++ `description`: `Atributos obrigatórios - id_module e url_codigo_fonte` (string) - Descrição do erro.
+
+## NotFoundError Module (object)
++ Include NotFound Error
++ `description`: `id_module não encontrado ou inválido` (string) - Descrição do erro.
+
+## ConflictError Module (object)
++ Include Conflict Error
++ `description`: `Módulo com mesmo id_module já cadastrado` (string) - Descrição do erro.
+
+## InternalServerError Module (object)
++ Include NotFound Error
++ `description`: `Erro ao validar módulo. Consulte Logs do Sistema` - Descrição do erro.
+
+## BadRequestError Sensor (object)
++ Include BadRequest Error
++ `description`: `Atributos obrigatórios - id_sensor, type_grandeza, id_module` (string) - Descrição do erro.
+
+## NotFoundError Sensor (object)
++ Include NotFound Error
++ `description`: `id_module, id_sensor ou type_grandeza não encontrado` (string) - Descrição do erro.
+
+## ConflictError Sensor (object)
++ Include Conflict Error
++ `description`: `Sensor com mesmo id_sensor já cadastrado` (string) - Descrição do erro.
+
+## InternalServerError Sensor (object)
++ Include NotFound Error
++ `description`: `Erro ao validar ou efetuar leitura do Sensor. Consulte Logs do Sistema` - Descrição do erro.
+
+## NotFoundError Medida (object)
++ Include NotFound Error
++ `description`: `id_sensor não encontrado ou inválido` (string) - Descrição do erro.
+
+## InternalServerError Medida (object)
++ Include NotFound Error
++ `description`: `Erro efetuar leitura do Sensor. Consulte Logs do Sistema` - Descrição do erro.
+
+## NotFoundError Grandeza (object)
++ Include NotFound Error
++ `description`: `grandeza não encontrada ou inválida` (string) - Descrição do erro.
+
+## BadRequestError Grandeza (object)
++ Include BadRequest Error
++ `description`: `Atributos obrigatórios - type e unit` (string) - Descrição do erro.
+
+## ConflictError Grandeza (object)
++ Include Conflict Error
++ `description`: `Grandeza com tipo ou unidade já cadastrada` (string) - Descrição do erro.
+
+## NotFoundError Limiar (object)
++ Include NotFound Error
++ `description`: `id_sensor não encontrada` (string) - Descrição do erro.
+
+## BadRequestError Limiar (object)
++ Include BadRequest Error
++ `description`: `Atributos obrigatórios - value_max, value_min e id_sensor` (string) - Descrição do erro.

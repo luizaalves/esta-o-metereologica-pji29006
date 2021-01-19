@@ -15,15 +15,11 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Inserir novo módulo na Rasp [POST]
 + Request (application/json)
-    + Attributes
-        - module (Module)
+    + Attributes (Module)
 
 + Response 201 (application/json)
     + Headers
-        
-            Location: /modules/mDHT
-
-    + Body
+    + Attributes (Module)
 
 + Response 400 (application/json)
     + Attributes
@@ -39,9 +35,9 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Atualizar informações de um Módulo [PUT]
 + Request (application/json)
-    + Attributes
-        - module (Module)
+    + Attributes (Module)
 + Response 204
+    + Attributes (Module)
 + Response 400 (application/json)
     + Attributes
         - error (BadRequestError Module)
@@ -55,8 +51,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Listar informações de um módulo [GET]
 + Response 200 (application/json)
-    + Attributes
-        - module (Module)
+    + Attributes (Module)
 
 + Response 404 (application/json)
     + Attributes
@@ -72,15 +67,11 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Inserir nova Grandeza no Sistema [POST]
 + Request (application/json)
-    + Attributes
-        - grandeza (Grandeza)
+    + Attributes (Grandeza)
 
 + Response 201 (application/json)
     + Headers
-        
-            Location: /grandeza/temperatura
-
-    + Body
+    + Attributes (Grandeza)
 
 + Response 400 (application/json)
     + Attributes
@@ -92,9 +83,9 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Atualizar informações de uma Grandeza [PUT]
 + Request (application/json)
-    + Attributes
-        - grandeza (Grandeza)
+    + Attributes (Grandeza)
 + Response 204
+    + Attributes (Grandeza)
 + Response 400 (application/json)
     + Attributes
         - error (BadRequestError Grandeza)
@@ -112,8 +103,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Listar informações da Grandeza [GET]
 + Response 200 (application/json)
-    + Attributes
-        - grandeza (Grandeza)
+    + Attributes (Grandeza)
 
 + Response 404 (application/json)
     + Attributes
@@ -129,15 +119,11 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Inserir novo Sensor na Rasp [POST]
 + Request (application/json)
-    + Attributes
-        - sensor (Sensor)
+    + Attributes (Sensor)
 
 + Response 201 (application/json)
     + Headers
-        
-            Location: /sensors/dht11estufa/medidas
-
-    + Body
+    + Attributes (Sensor)
 
 + Response 400 (application/json)
     + Attributes
@@ -153,9 +139,9 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Atualizar informações de um Sensor [PUT]
 + Request (application/json)
-    + Attributes
-        - module (Sensor)
+    + Attributes (Sensor)
 + Response 204
+    + Attributes (Sensor)
 + Response 400 (application/json)
     + Attributes
         - error (BadRequestError Sensor)
@@ -169,8 +155,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Listar informações de um Sensor [GET]
 + Response 200 (application/json)
-    + Attributes
-        - sensor (Sensor)
+    + Attributes (Sensor)
 
 + Response 404 (application/json)
     + Attributes
@@ -182,8 +167,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Executar Leitura atual da grandeza medida pelo Sensor [GET]
 + Response 200 (application/json)
-    + Attributes
-        - medida (Medida)
+    + Attributes (Medida)
 
 + Response 404 (application/json)
     + Attributes
@@ -199,8 +183,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ### Executar configuração dos Limiares das Gradezas medidas pelo Sensor [GET]
 + Response 200 (application/json)
-    + Attributes
-        - limiar (Limiar)
+    + Attributes (Limiar)
 
 + Response 404 (application/json)
     + Attributes
@@ -262,7 +245,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 + `description`: `Módulo com mesmo id_module já cadastrado` (string) - Descrição do erro.
 
 ## InternalServerError Module (object)
-+ Include NotFound Error
++ Include InternalServer Error
 + `description`: `Erro ao validar módulo. Consulte Logs do Sistema` - Descrição do erro.
 
 ## BadRequestError Sensor (object)

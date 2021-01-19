@@ -1,22 +1,26 @@
-from models import Sensor
-from estacao.utils import Medida, Limiar
+from models.sensor import Sensor
+from models.limiar import Limiar
+from models.module import Module
+from models.grandeza import Grandeza
+
+from principal.utils import Medida
 
 class AppController:
     def __init__(self, read_interval=1):
 
         self.read_interval = read_interval
         self.limiares = {}
-        self.sensores = []
-        self.modules = []
-        self.gradezas = []
+        self.sensores = {}
+        self.modules = {}
+        self.gradezas = {}
 
     def add_sensor(self, sensor: Sensor) -> bool:
         return False
     
-    def config_limiar(self, limiares: Limiar, id_sensor: str) -> bool:
+    def config_limiar(self, limiares: str, id_sensor: str) -> bool:
         return False
 
-    def read_one(self, id_sensor: str) -> Medida:
+    def read_one(self, id_sensor: str) -> str:
         return None
 
     def read_all(self) -> list:
@@ -31,5 +35,5 @@ class AppController:
     def _write_db(self):
         pass
 
-    def get_sensor(self, id_sensor) -> Sensor:
-        return Sensor(None, None, None, None)
+    def get_sensor(self, id_sensor) -> str:
+        return None

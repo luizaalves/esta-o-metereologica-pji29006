@@ -1,5 +1,5 @@
 # Modulo para classes uteis que são utilizadas pelo módulo controller
-from models import Grandeza
+from models.grandeza import Grandeza
 
 # Classe responsável por representar uma Medida
 class Medida:

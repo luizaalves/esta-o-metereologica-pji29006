@@ -1,5 +1,5 @@
 from flask_restful import fields, marshal_with, reqparse, Resource
-from ...main.dictionary import Unidade
+from principal.dictionary import Unidade
 
 post_parser = reqparse.RequestParser()
 post_parser.add_argument(
@@ -39,3 +39,6 @@ class SensorsAPI(Resource):
         sensor = args.id_sensor
         print(sensor)
         return  sensor,201
+
+
+

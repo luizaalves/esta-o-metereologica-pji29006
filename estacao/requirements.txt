@@ -2,4 +2,3 @@ pytest
 Flask
 Flask-RESTful
 flask-sqlalchemy
-mysql-connector-python

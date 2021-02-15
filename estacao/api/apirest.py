@@ -25,4 +25,6 @@ api.add_resource(SensorsAPI, '/sensors', '/sensors/<string:id_sensor>',
 if __name__ == '__main__':
     from principal.db import db 
     db.init_app(app)
+    with app.app_context():
+        estacao.load_all()
     app.run(debug=True)

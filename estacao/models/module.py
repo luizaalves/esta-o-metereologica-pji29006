@@ -14,7 +14,18 @@ class Module(db.Model):
     def save_db(self):
         db.session.add(self)
         db.session.commit()
+
+    def update_db(self):
+        db.session.flush(self)
+        db.session.commit()
     
     @classmethod
     def find_by_id(cls, id_module: str):
         return cls.query.filter_by(id_module=id_module).first()
+
+    @classmethod
+    def find_by_all(cls):
+        return cls.query.all()
+
+    def __repr__(self):
+        return 'Module("%s","%s","%s")' % (self.id_module, self.description, self.url_codigo_fonte)

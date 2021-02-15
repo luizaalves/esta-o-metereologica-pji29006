@@ -3,7 +3,7 @@ from models.module import Module
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 
 post_parser = reqparse.RequestParser()
-        
+
 post_parser.add_argument('id_module', dest='id_module', location='json', required=True,
     help='Identificador do módulo é obrigatório - {error_msg}',
 )
@@ -13,6 +13,7 @@ post_parser.add_argument('url_codigo_fonte', dest='url_codigo_fonte', location='
 post_parser.add_argument('description', dest='description', location='json',
     help='Descrição do módulo - {error_msg}',
 )
+
 
 modules_fields = {
     'id_module': fields.String,
@@ -47,13 +48,18 @@ class ModulesAPI(Resource):
 
     def post(self):
         args = post_parser.parse_args()
-        id_module = args.id_module
 
-        if id_module in self.estacao.modules:
+        new_module =  Module(args.id_module, args.url_codigo_fonte)
+        if not self.estacao.add_module(new_module):
             error = ConflictError(conflit_description)
             return marshal(error, error_fields, 'error'), 409
-        
-        new_module =  Module(args.id_module, args.url_codigo_fonte)
-        self.estacao.modules[id_module] = new_module
-        #module.save_db()
         return  marshal(new_module, modules_fields), 201
+
+    def put(self):
+        args = post_parser.parse_args()
+
+        change_module =  Module(args.id_module, args.url_codigo_fonte)
+        if not self.estacao.change_module(change_module):
+            error = NotFoundError(notfound_description)
+            return marshal(error, error_fields, 'error'), 409
+        return  None , 204

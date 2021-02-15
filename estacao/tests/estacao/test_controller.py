@@ -20,18 +20,15 @@ class TestAppControl(TestCase):
         appController.add_module(new_module)       
         self.assertFalse(appController.add_module(new_module))
 
-    def test_add_grandeza_success(self):
-        new_grandeza = Grandeza("Temperatura", "celsius")     
-        self.assertEqual(appController.add_grandeza(new_grandeza), 1, "Não foi possível criar a Grandeza")
+    def test_add_grandeza_success(self): 
+        self.assertEqual(appController.add_grandeza("Temperatura", "Celsius"), 1, "Não foi possível criar a Grandeza")
 
     def test_add_grandeza_duplicated(self):
-        new_grandeza = Grandeza("Umidade", "porcent")
-        appController.add_grandeza(new_grandeza)       
-        self.assertEqual(appController.add_grandeza(new_grandeza), 2, "Grandeza já existe")
+        appController.add_grandeza("tempo", "segundo")       
+        self.assertEqual(appController.add_grandeza("tempo", "segundo"), 2, "Grandeza já existe")
 
-    def test_add_grandeza_unit_error(self):
-        new_grandeza = Grandeza("Temperatura", "fahrenheit")     
-        self.assertEqual(appController.add_grandeza(new_grandeza), 3, "Unidade não cadastrada")
+    def test_add_grandeza_unit_error(self):  
+        self.assertEqual(appController.add_grandeza("Temperatura", "fahrenheit"), 3, "Unidade não cadastrada")
 
 if __name__ == '__main__':
     main()

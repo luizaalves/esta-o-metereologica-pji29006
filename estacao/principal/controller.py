@@ -41,13 +41,14 @@ class AppController:
             change_module.update_db()
         return True
 
-    def add_grandeza(self, new_grandeza: Grandeza) -> int:
-        unit_new_grandeza = Unidade.has_key(new_grandeza.unit)
+    def add_grandeza(self, new_type: str, new_unit: str) -> int:
+        unit_new_grandeza = Unidade.has_key(new_unit)
         if unit_new_grandeza is None:
             return 3
-        if unit_new_grandeza in self.grandezas:
+        if unit_new_grandeza.name in self.grandezas:
             return 2
-        self.grandezas[unit_new_grandeza] = new_grandeza
+        new_grandeza = Grandeza(new_type, str(unit_new_grandeza.name))
+        self.grandezas[unit_new_grandeza.name] = new_grandeza
         if self.backup:
             logging.info('Salvando nova Grandeza no banco')
             new_grandeza.save_db()
@@ -71,21 +72,22 @@ class AppController:
     def notify(self, id_sensor: str):
         pass
 
-    def _read_db(self):
-        pass
-
-    def _write_db(self):
-        pass
-
     def get_sensor(self, id_sensor) -> str:
         return None
     
     def load_all(self):
-        app.logger.info('Carregando em memória')
+        logging.info('Carregando em memória')
         self.__load_modules()
+        self.__load_grandezas()
             
     def __load_modules(self):
-        app.logger.info('Carregando Modulos')
+        logging.info('Carregando Modulos')
         list_modules = Module.find_by_all()
         for module in list_modules:
             self.modules[module.id_module] = module
+    
+    def __load_grandezas(self):
+        logging.info('Carregando Grandezas')
+        list_grandezas = Grandeza.find_by_all()
+        for grandeza in list_grandezas:
+            self.grandezas[grandeza.unit] = grandeza

@@ -21,10 +21,6 @@ class Module(db.Model):
         db.session.commit()
     
     @classmethod
-    def find_by_id(cls, id_module: str):
-        return cls.query.filter_by(id_module=id_module).first()
-
-    @classmethod
     def find_by_all(cls):
         return cls.query.all()
 

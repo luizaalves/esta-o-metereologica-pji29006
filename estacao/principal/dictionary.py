@@ -2,16 +2,20 @@ from enum import Enum
 import logging
 
 class Unidade(Enum):
-    metro = 1
-    segundo = 2
-    celsius = 3
-    porcent = 4
-    kelvin = 5
+    metro = 'm'
+    segundo = 's'
+    celsius = '°C'
+    porcent = '%'
+    kelvin = 'K'
 
-    @classmethod
-    def has_key(cls, str_unidade: str):
-        if str_unidade in cls.__members__:
-            return str_unidade
+    @staticmethod
+    def has_key(str_unidade: str):
+        unit = str_unidade.lower()
+        if unit in Unidade.__members__:
+            return Unidade[unit]
         else:
             logging.error("{} não existe no Enum Unidade".format(str_unidade))
             return None
+    
+    def __repr__(self):
+        return str(self.name)

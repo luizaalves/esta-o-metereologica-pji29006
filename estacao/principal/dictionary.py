@@ -5,6 +5,8 @@ class Unidade(Enum):
     metro = 1
     segundo = 2
     celsius = 3
+    porcent = 4
+    kelvin = 5
 
     @classmethod
     def has_key(cls, str_unidade: str):
@@ -12,4 +14,4 @@ class Unidade(Enum):
             return str_unidade
         else:
             logging.error("{} não existe no Enum Unidade".format(str_unidade))
-            raise ValueError('{} não é uma unidade válida'.format(str_unidade))
+            return None

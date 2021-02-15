@@ -10,3 +10,18 @@ class Grandeza(db.Model):
     def __init__(self, type_grandeza: str, unit: Unidade):
         self.type_grandeza = type_grandeza
         self.unit = unit
+
+    def save_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update_db(self):
+        db.session.flush(self)
+        db.session.commit()
+
+    @classmethod
+    def find_by_all(cls):
+        return cls.query.all()
+
+    def __repr__(self):
+        return 'Grandeza("%s","%s")' % (self.type_grandeza, self.unit)

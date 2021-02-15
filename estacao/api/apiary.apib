@@ -80,29 +80,14 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
     + Attributes
         - error (ConflictError Grandeza)
 
-### Atualizar informações de uma Grandeza [PUT]
-+ Request (application/json)
-    + Attributes (Grandeza)
-+ Response 204
-    + Attributes (Grandeza)
-+ Response 400 (application/json)
-    + Attributes
-        - error (BadRequestError Grandeza)
-+ Response 404 (application/json)
-    + Attributes
-        - error (NotFoundError Grandeza)
-
-+ Response 409 (application/json)
-    + Attributes
-        - error (ConflictError Grandeza)
-
-## Grandeza [/grandezas/{type}]
+## Grandeza [/grandezas/{type_grandeza}]
 + Parameters
-    + type: temperatura (string) - Tipo da Grandeza.
+    + type_grandeza: temperatura (string) - Tipo da Grandeza.
 
 ### Listar informações da Grandeza [GET]
 + Response 200 (application/json)
-    + Attributes (Grandeza)
+    + Attributes
+        - grandezas (array[Grandeza])
 
 + Response 404 (application/json)
     + Attributes
@@ -202,7 +187,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 + `id_module`: `mDHT` (string, required) - Identificador do módulo utilizado.
 
 ## Grandeza (object)
-+ `type`: `Temperatura` (string, required) - Tipo da Grandeza.
++ `type_grandeza`: `Temperatura` (string, required) - Tipo da Grandeza.
 + `unit`: `° Celsius` (string, required) - Unidade da Grandeza.
 
 ## Medida (object)

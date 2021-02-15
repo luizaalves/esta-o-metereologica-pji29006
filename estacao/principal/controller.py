@@ -4,7 +4,8 @@ from models.module import Module
 from models.grandeza import Grandeza
 from principal.db import db
 from principal.utils import Medida
-from flask import current_app as app
+from principal.dictionary import Unidade
+import logging
 
 class AppController:
     def __init__(self, read_interval=1, backup=True):
@@ -14,7 +15,7 @@ class AppController:
         self.limiares = {}
         self.sensores = {}
         self.modules = {}
-        self.gradezas = {}
+        self.grandezas = {}
 
     def add_module(self, new_module: Module) -> bool:
         id_new_module = new_module.id_module
@@ -24,25 +25,40 @@ class AppController:
         #TODO - Inserir lógica para adicionar script python referente ao módulo
         
         if self.backup:
-            app.logger.info('Salvando novo Módulo no banco')
+            logging.info('Salvando novo Módulo no banco')
             new_module.save_db()
         return True
 
     def change_module(self, change_module: Module) -> bool:
         id_change_module = change_module.id_module
         if not id_change_module in self.modules:
-            app.logger.warn('id_module %s não existe' % id_change_module)
+            logging.warn('id_module %s não existe' % id_change_module)
             return False
         self.modules[id_change_module] = change_module
         #TODO - Inserir lógica para alterar script python referente ao módulo
         if self.backup:
-            app.logger.info('Salvando Alteração do Módulo no banco')
+            logging.info('Salvando Alteração do Módulo no banco')
             change_module.update_db()
         return True
 
-    def add_sensor(self, sensor: Sensor) -> bool:
-        return False
+    def add_grandeza(self, new_grandeza: Grandeza) -> int:
+        unit_new_grandeza = Unidade.has_key(new_grandeza.unit)
+        if unit_new_grandeza is None:
+            return 3
+        if unit_new_grandeza in self.grandezas:
+            return 2
+        self.grandezas[unit_new_grandeza] = new_grandeza
+        if self.backup:
+            logging.info('Salvando nova Grandeza no banco')
+            new_grandeza.save_db()
+        return 1
+
+    def add_sensor(self, new_sensor: Sensor) -> int:
+        return 0
     
+    def change_sensor(self, new_sensor: Sensor) -> int:
+        return 0
+
     def config_limiar(self, limiares: str, id_sensor: str) -> bool:
         return False
 

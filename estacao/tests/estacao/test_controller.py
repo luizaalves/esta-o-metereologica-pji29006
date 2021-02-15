@@ -1,26 +1,23 @@
 from unittest import main, TestCase
 
-from estacao.utils import Medida, Grandeza
-from estacao.dictionary import Unidade
-from estacao.controller import AppController
-from estacao.sensor import Sensor
-from modules.interfaces import IModule
+from principal.controller import AppController
+from models.module import Module
+from models.sensor import Sensor
 
-appController = AppController(None, None, None)
-bmp180 = IModule()
-celsius = Unidade.celsius
-temperatura = Grandeza("Temperatura", celsius )
-id_sensor = "sensor_temp"
-sensor_temp = Sensor(id_sensor, "Sensor de temperatura", temperatura, bmp180)
+
+appController = AppController(backup=False)
 
 class TestAppControl(TestCase):
 
-    def test_add_sensor_success(self):       
-        self.assertTrue(appController.add_sensor(sensor_temp))
-    
-    def test_compare_sensor_add(self):
-        sensor_get = appController.get_sensor(id_sensor)       
-        self.assertEqual(sensor_temp.id_sensor, sensor_get.id_sensor)
+    def test_add_module_success(self):
+        new_module = Module("mDHT","https","Teste module add")       
+        self.assertTrue(appController.add_module(new_module))
+
+    def test_add_module_duplicated(self):
+        new_module = Module("mDHT2","https","Teste module add")
+        appController.add_module(new_module)       
+        self.assertFalse(appController.add_module(new_module))
+
 
 if __name__ == '__main__':
     main()

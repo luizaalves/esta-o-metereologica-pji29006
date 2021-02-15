@@ -7,8 +7,9 @@ class Module(db.Model):
     description = db.Column(db.String)
     url_codigo_fonte = db.Column(db.String)
 
-    def __init__(self, id_module: str, url_codigo_fonte: str):
+    def __init__(self, id_module: str, url_codigo_fonte: str, description=None):
         self.id_module = id_module
+        self.description = description
         self.url_codigo_fonte = url_codigo_fonte
 
     def save_db(self):

@@ -7,9 +7,10 @@ from principal.utils import Medida
 from flask import current_app as app
 
 class AppController:
-    def __init__(self, read_interval=1):
+    def __init__(self, read_interval=1, backup=True):
 
         self.read_interval = read_interval
+        self.backup = backup
         self.limiares = {}
         self.sensores = {}
         self.modules = {}
@@ -18,12 +19,13 @@ class AppController:
     def add_module(self, new_module: Module) -> bool:
         id_new_module = new_module.id_module
         if id_new_module in self.modules:
-            app.logger.warn('id_module %s já existe' % id_new_module)
             return False
         self.modules[id_new_module] = new_module
         #TODO - Inserir lógica para adicionar script python referente ao módulo
-        app.logger.info('Salvando novo Módulo no banco')
-        new_module.save_db()
+        
+        if self.backup:
+            app.logger.info('Salvando novo Módulo no banco')
+            new_module.save_db()
         return True
 
     def change_module(self, change_module: Module) -> bool:
@@ -33,8 +35,9 @@ class AppController:
             return False
         self.modules[id_change_module] = change_module
         #TODO - Inserir lógica para alterar script python referente ao módulo
-        app.logger.info('Salvando Alteração do Módulo no banco')
-        change_module.update_db()
+        if self.backup:
+            app.logger.info('Salvando Alteração do Módulo no banco')
+            change_module.update_db()
         return True
 
     def add_sensor(self, sensor: Sensor) -> bool:

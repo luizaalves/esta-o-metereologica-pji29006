@@ -4,6 +4,7 @@ from principal.controller import AppController
 from models.module import Module
 from models.sensor import Sensor
 from models.grandeza import Grandeza
+from models.limiar import Limiar
 from principal.dictionary import Unidade
 
 
@@ -50,9 +51,14 @@ class TestAppControl(TestCase):
         new_sensor = Sensor("sala2", "proximidade", "celsius", "BMP180")    
         self.assertEqual(appController.add_sensor(new_sensor), 4, "Cadastrou sensor com grandeza inexistente")
 
-    # Testes Leitua de Sensor
-    def test_read_one_sensor_success(self):   
-        self.assertTrue(appController.read_one('estufa') < 100)
+    # Testes configuração de Limiar
+    def test_config_limiar_success(self):
+        new_limiar = Limiar("estufa", 30.0 ,37.0)
+        self.assertEqual(appController.config_limiar(new_limiar), 1, "Não foi possível inserir sensor")
+    
+    def test_config_limiar_sensor_error(self):
+        new_limiar = Limiar("estufa5", 30.0 ,37.0)
+        self.assertEqual(appController.config_limiar(new_limiar), 2, "Cadastrou limiar com id_sensor inexistente")
 
 if __name__ == '__main__':
     main()

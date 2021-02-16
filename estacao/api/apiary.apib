@@ -144,6 +144,31 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
     + Attributes
         - error (NotFoundError Sensor)
 
+## Limiar [/sensors/{id_sensor}/limiares]
++ Parameters
+    + id_sensor: dht11estufa (string) - Identificador do Sensor.
+
+### Listar Limiares das Gradezas medidas pelo Sensor [GET]
++ Response 200 (application/json)
+    + Attributes (Limiar)
+
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Limiar)
+
+### Atualizar Limiares no Sensor [PUT]
++ Request (application/json)
+    + Attributes (Limiar)
+
++ Response 204
++ Response 400 (application/json)
+    + Attributes
+        - error (BadRequestError Limiar)
+
++ Response 404 (application/json)
+    + Attributes
+        - error (NotFoundError Limiar)
+
 ## Leitura [/sensors/{id_sensor}/medidas]
 + Parameters
     + id_sensor: dht11estufa (string) - Identificador do Sensor.
@@ -159,18 +184,6 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 + Response 500 (application/json)
     + Attributes
         - error (InternalServerError Medida)
-
-## Limiar [/sensors/{id_sensor}/limiar]
-+ Parameters
-    + id_sensor: dht11estufa (string) - Identificador do Sensor.
-
-### Executar configuração dos Limiares das Gradezas medidas pelo Sensor [GET]
-+ Response 200 (application/json)
-    + Attributes (Limiar)
-
-+ Response 404 (application/json)
-    + Attributes
-        - error (NotFoundError Limiar)
 
 # Data Structures
 

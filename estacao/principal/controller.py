@@ -77,14 +77,25 @@ class AppController:
         if result_verify != 2:
             return result_verify
         id_change_sensor = change_sensor.id_sensor.lower()
+        change_sensor.module = ModulesAvailable.get_instance(change_sensor.id_module)
         self.sensores[id_change_sensor] = change_sensor
         if self.backup:
             logger.info('Salvando Alteração do Sensor (id_sensor=%s) no banco' % id_change_sensor)
             change_sensor.update_db()
         return result_verify
 
-    def config_limiar(self, limiares: str, id_sensor: str) -> bool:
-        return False
+    def config_limiar(self, limiar: Limiar) -> int:
+        id_sensor = limiar.id_sensor.lower()
+        if not id_sensor in self.sensores:
+            return 2
+        limiar_exists = self.limiares.get(id_sensor)
+        self.limiares[id_sensor] = limiar
+        if self.backup:
+            logger.info('Salvando Alteração de Limiar do Sensor (id_sensor=%s) no banco' % id_sensor)
+            if limiar_exists is None:
+                limiar.save_db()
+            limiar.update_db()
+        return 1
 
     def read_one(self, id_sensor: str) -> str:
         leitura = self.sensores.get(id_sensor.lower()).module.read()
@@ -121,6 +132,7 @@ class AppController:
         logger.info('Carregando Sensores cadastradas')
         list_sensors = Sensor.find_by_all()
         for sensor in list_sensors:
+            sensor.module = ModulesAvailable.get_instance(sensor.id_module)
             self.sensores[sensor.id_sensor] = sensor
         
     def __verify_sensor(self, sensor: Sensor) -> int:

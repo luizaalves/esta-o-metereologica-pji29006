@@ -66,5 +66,5 @@ class ModulesAPI(Resource):
         change_module =  Module(args.id_module, args.url_codigo_fonte, args.description)
         if not self.estacao.change_module(change_module):
             error = NotFoundError(notfound_description)
-            return marshal(error, error_fields, 'error'), 409
+            return marshal(error, error_fields, 'error'), 404
         return  None , 204

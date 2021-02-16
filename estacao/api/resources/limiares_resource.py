@@ -4,9 +4,6 @@ from api.resources.errors import NotFoundError, BadRequestError, ConflictError, 
 
 put_parser = reqparse.RequestParser()
 
-put_parser.add_argument('id_sensor', dest='id_sensor', location='args', required=True,
-    help='Parâmetro id_sensor é obrigatório - {error_msg}',
-)
 put_parser.add_argument('value_min', type=float, dest='value_min', location='json', required=True,
     help='Campo value_min é obrigatório - {error_msg}',
 )
@@ -38,4 +35,13 @@ class LimiaresAPI(Resource):
             error = NotFoundError(notfound_description)
             return marshal(error, error_fields, 'error'), 404
         limiar = self.estacao.limiares.get(sensor_id)
-        return marshal(limiar, limiar_fields), 200           
+        return marshal(limiar, limiar_fields), 200
+
+    def put(self, id_sensor):
+        args = put_parser.parse_args()
+        change_limiar =  Limiar(id_sensor, args.value_min, args.value_max)
+        result_change = self.estacao.config_limiar(change_limiar)
+        if result_change == 2:
+            error = NotFoundError(notfound_description)
+            return marshal(error, error_fields, 'error'), 404
+        return  None , 204           

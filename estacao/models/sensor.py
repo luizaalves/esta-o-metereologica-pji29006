@@ -18,3 +18,19 @@ class Sensor(db.Model):
         self.unit = unit
         self.id_module = id_module
         self.description = description
+    
+    def save_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update_db(self):
+        db.session.flush(self)
+        db.session.commit()
+    
+    @classmethod
+    def find_by_all(cls):
+        return cls.query.all()
+
+    def __repr__(self):
+        return 'Sensor("%s","%s","%s","%s","%s")' % (self.id_sensor, self.type_grandeza,
+                                                 self.unit, self.description, self.id_module)

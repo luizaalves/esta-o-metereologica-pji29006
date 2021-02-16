@@ -3,7 +3,7 @@ from models.module import Module
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 import logging, logging.config
 
-logging.config.fileConfig(fname='logging.conf',disable_existing_loggers=False)
+logging.config.fileConfig(fname='logging.conf')
 logger = logging.getLogger(__name__)
 
 post_parser = reqparse.RequestParser()
@@ -63,7 +63,7 @@ class ModulesAPI(Resource):
     def put(self):
         args = post_parser.parse_args()
 
-        change_module =  Module(args.id_module, args.url_codigo_fonte)
+        change_module =  Module(args.id_module, args.url_codigo_fonte, args.description)
         if not self.estacao.change_module(change_module):
             error = NotFoundError(notfound_description)
             return marshal(error, error_fields, 'error'), 409

@@ -58,25 +58,27 @@ class AppController:
         return 1
 
     def add_sensor(self, new_sensor: Sensor) -> int:
-        new_unit_str = new_sensor.unit.lower()
-        new_type_grandeza = new_sensor.type_grandeza.lower()
-        unit = self.grandezas.get(new_unit_str)
-        if (unit is None) or (new_type_grandeza != unit.type_grandeza.lower()):
-            return 4
-        new_module = new_sensor.id_module.lower()
-        if not new_module in self.modules:
-            return 3
-        new_id_sensor = new_sensor.id_sensor.lower()
-        if new_id_sensor in self.sensores:
-            return 2
-        self.sensores[new_id_sensor] = new_sensor
-        if self.backup:
-            logger.info('Gravando novo Sensor no banco')
-            #new_sensor.save_db()
-        return 1
+        result_verify = self.__verify_sensor(new_sensor)
+        if result_verify == 1:
+            id_sensor = new_sensor.id_sensor.lower()
+            self.sensores[id_sensor] = new_sensor
+            if self.backup:
+                logger.info('Gravando novo Sensor (id_sensor=%s) no banco' % (id_sensor))
+                new_sensor.save_db()
+            return result_verify
+        return result_verify
     
-    def change_sensor(self, new_sensor: Sensor) -> int:
-        return 0
+    def change_sensor(self, change_sensor: Sensor) -> int:
+        result_verify = self.__verify_sensor(change_sensor)
+        logger.debug('verify_sensor = %d' % result_verify)
+        if result_verify != 2:
+            return result_verify
+        id_change_sensor = change_sensor.id_sensor.lower()
+        self.sensores[id_change_sensor] = change_sensor
+        if self.backup:
+            logger.info('Salvando Alteração do Sensor (id_sensor=%s) no banco' % id_change_sensor)
+            change_sensor.update_db()
+        return result_verify
 
     def config_limiar(self, limiares: str, id_sensor: str) -> bool:
         return False
@@ -97,6 +99,7 @@ class AppController:
         logger.info('Carregando informações em memória')
         self.__load_modules()
         self.__load_grandezas()
+        self.__load_sensors()
             
     def __load_modules(self):
         logger.info('Carregando Modulos cadastrados')
@@ -109,3 +112,26 @@ class AppController:
         list_grandezas = Grandeza.find_by_all()
         for grandeza in list_grandezas:
             self.grandezas[grandeza.unit.lower()] = grandeza
+        
+    def __load_sensors(self):
+        logger.info('Carregando Sensores cadastradas')
+        list_sensors = Sensor.find_by_all()
+        for sensor in list_sensors:
+            self.sensores[sensor.id_sensor] = sensor
+        
+    def __verify_sensor(self, sensor: Sensor) -> int:
+        unit_str = sensor.unit.lower()
+        type_grandeza = sensor.type_grandeza.lower()
+        unit = self.grandezas.get(unit_str)
+        if (unit is None) or (type_grandeza != unit.type_grandeza.lower()):
+            logger.warning('Não foi encontrado nenhuma unidade=%s ou tipo=%s' % (unit_str,type_grandeza))
+            return 4
+        id_module = sensor.id_module.lower()
+        if not id_module in self.modules:
+            logger.warning('Não foi encontrado modulo com id_module=%s' % (id_module))
+            return 3
+        id_sensor = sensor.id_sensor.lower()
+        if id_sensor in self.sensores:
+            logger.warning('Sensor com id_sensor=%s já está cadastrado' % (id_sensor))
+            return 2
+        return 1

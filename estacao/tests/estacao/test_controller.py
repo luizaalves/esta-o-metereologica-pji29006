@@ -11,6 +11,7 @@ appController = AppController(backup=False)
 
 class TestAppControl(TestCase):
 
+    # Testes Modulos
     def test_add_module_success(self):
         new_module = Module("mDHT","https","Teste module add")       
         self.assertTrue(appController.add_module(new_module))
@@ -20,6 +21,7 @@ class TestAppControl(TestCase):
         appController.add_module(new_module)       
         self.assertFalse(appController.add_module(new_module))
 
+    # Testes Grandeza
     def test_add_grandeza_success(self): 
         self.assertEqual(appController.add_grandeza("Temperatura", "Celsius"), 1, "Não foi possível criar a Grandeza")
 
@@ -30,6 +32,7 @@ class TestAppControl(TestCase):
     def test_add_grandeza_unit_error(self):  
         self.assertEqual(appController.add_grandeza("Temperatura", "fahrenheit"), 3, "Adicionou grandeza com unidade não cadastrada")
 
+    # Testes Sensores
     def test_add_sensor_success(self):
         new_sensor = Sensor("estufa", "temperatura", "celsius", "mDHT")
         self.assertEqual(appController.add_sensor(new_sensor), 1, "Não foi possível inserir sensor")

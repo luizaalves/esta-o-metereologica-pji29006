@@ -125,7 +125,6 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 + Request (application/json)
     + Attributes (Sensor)
 + Response 204
-    + Attributes (Sensor)
 + Response 400 (application/json)
     + Attributes
         - error (BadRequestError Sensor)
@@ -239,7 +238,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ## NotFoundError Sensor (object)
 + Include NotFound Error
-+ `description`: `id_module, id_sensor ou type_grandeza não encontrado` (string) - Descrição do erro.
++ `description`: `id_sensor não encontrado` (string) - Descrição do erro.
 
 ## ConflictError Sensor (object)
 + Include Conflict Error

@@ -18,7 +18,7 @@ class AppController:
         self.grandezas = {}
 
     def add_module(self, new_module: Module) -> bool:
-        id_new_module = new_module.id_module
+        id_new_module = new_module.id_module.lower()
         if id_new_module in self.modules:
             return False
         self.modules[id_new_module] = new_module
@@ -30,7 +30,7 @@ class AppController:
         return True
 
     def change_module(self, change_module: Module) -> bool:
-        id_change_module = change_module.id_module
+        id_change_module = change_module.id_module.lower()
         if not id_change_module in self.modules:
             logging.warn('id_module %s não existe' % id_change_module)
             return False
@@ -55,7 +55,22 @@ class AppController:
         return 1
 
     def add_sensor(self, new_sensor: Sensor) -> int:
-        return 0
+        new_unit_str = new_sensor.unit.lower()
+        new_type_grandeza = new_sensor.type_grandeza.lower()
+        unit = self.grandezas.get(new_unit_str)
+        if (unit is None) or (new_type_grandeza != unit.type_grandeza.lower()):
+            return 4
+        new_module = new_sensor.id_module.lower()
+        if not new_module in self.modules:
+            return 3
+        new_id_sensor = new_sensor.id_sensor.lower()
+        if new_id_sensor in self.sensores:
+            return 2
+        self.sensores[new_id_sensor] = new_sensor
+        if self.backup:
+            logging.info('Gravando novo Sensor no banco')
+            #new_sensor.save_db()
+        return 1
     
     def change_sensor(self, new_sensor: Sensor) -> int:
         return 0

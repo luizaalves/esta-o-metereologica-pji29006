@@ -46,7 +46,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ## Módulo [/modules/{id_module}]
 + Parameters
-    + id_module: mDHT (string) - Identificador do Módulo.
+    + id_module: mDHT (string, required) - Identificador do Módulo.
 
 ### Listar informações de um módulo [GET]
 + Response 200 (application/json)
@@ -82,7 +82,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ## Grandeza [/grandezas/{type_grandeza}]
 + Parameters
-    + type_grandeza: temperatura (string) - Tipo da Grandeza.
+    + type_grandeza: temperatura (string, required) - Tipo da Grandeza.
 
 ### Listar informações da Grandeza [GET]
 + Response 200 (application/json)
@@ -134,7 +134,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ## Sensor [/sensors/{id_sensor}]
 + Parameters
-    + id_sensor: dht11estufa (string) - Identificador do Sensor.
+    + id_sensor: dht11estufa (string, required) - Identificador do Sensor.
 
 ### Listar informações de um Sensor [GET]
 + Response 200 (application/json)
@@ -146,7 +146,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ## Limiar [/sensors/{id_sensor}/limiares]
 + Parameters
-    + id_sensor: dht11estufa (string) - Identificador do Sensor.
+    + id_sensor: dht11estufa (string, required) - Identificador do Sensor.
 
 ### Listar Limiares das Gradezas medidas pelo Sensor [GET]
 + Response 200 (application/json)
@@ -171,7 +171,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ## Leitura [/sensors/{id_sensor}/medidas]
 + Parameters
-    + id_sensor: dht11estufa (string) - Identificador do Sensor.
+    + id_sensor: dht11estufa (string, required) - Identificador do Sensor.
 
 ### Executar Leitura atual da grandeza medida pelo Sensor [GET]
 + Response 200 (application/json)
@@ -206,12 +206,10 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 ## Medida (object)
 + `value`: `35` (number) - Valor da Grandeza medida no sensor.
 + Include Grandeza
-+ `id_sensor`: `dht11estufa` (string, required) - Identificador do sensor da medida.
 
 ## Limiar (object)
 + `value_min`: 30 (number, required) - Limite mínimo de uma Medida.
 + `value_max`: 37 (number, required) - Liminte máximo de uma Medida.
-+ `id_sensor`: `dht11estufa` (string, required) - Identificador do sensor que será configurado os Limiares.
 
 ## NotFound Error (object)
 + `code`: 404 (number) - Status code.

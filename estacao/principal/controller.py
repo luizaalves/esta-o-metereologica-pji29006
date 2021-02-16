@@ -64,6 +64,11 @@ class AppController:
         if result_verify == 1:
             id_sensor = new_sensor.id_sensor.lower()
             new_sensor.module = ModulesAvailable.get_instance(new_sensor.id_module)
+            limiar = Limiar(id_sensor)
+            self.config_limiar(limiar)
+            if self.backup:
+                logger.debug('Salvando Limiar padrão do Sensor (id_sensor=%s) no banco' % id_sensor)
+                limiar.save_db()
             self.sensores[id_sensor] = new_sensor
             if self.backup:
                 logger.info('Gravando novo Sensor (id_sensor=%s) no banco' % (id_sensor))
@@ -88,12 +93,9 @@ class AppController:
         id_sensor = limiar.id_sensor.lower()
         if not id_sensor in self.sensores:
             return 2
-        limiar_exists = self.limiares.get(id_sensor)
         self.limiares[id_sensor] = limiar
         if self.backup:
             logger.info('Salvando Alteração de Limiar do Sensor (id_sensor=%s) no banco' % id_sensor)
-            if limiar_exists is None:
-                limiar.save_db()
             limiar.update_db()
         return 1
 
@@ -115,6 +117,7 @@ class AppController:
         self.__load_modules()
         self.__load_grandezas()
         self.__load_sensors()
+        self.__load_limiares()
             
     def __load_modules(self):
         logger.info('Carregando Modulos cadastrados')
@@ -134,6 +137,12 @@ class AppController:
         for sensor in list_sensors:
             sensor.module = ModulesAvailable.get_instance(sensor.id_module)
             self.sensores[sensor.id_sensor] = sensor
+
+    def __load_limiares(self):
+        logger.info('Carregando Limiares configurados')
+        list_limiares = Limiar.find_by_all()
+        for limiar in list_limiares:
+            self.limiares[limiar.id_sensor] = limiar
         
     def __verify_sensor(self, sensor: Sensor) -> int:
         logger.debug('Verificando informações do Sensor')

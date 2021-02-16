@@ -37,5 +37,13 @@ curl http://127.0.0.1:5000/api/v1/sensors/estufa -H "Accept: application/json"
 curl -X PUT http://127.0.0.1:5000/api/v1/sensors -H "Content-Type: application/json" -d '{"id_sensor":"estufa","type_grandeza":"temperatura","unit":"farh","id_module":"mDHT2","description":"sensor de temperatura da estufa"}'
 
 
+## Limiares
+
+- GET one
+curl http://127.0.0.1:5000/api/v1/sensors/estufa-bmp180/limiares -H "Accept: application/json"
+
+- PUT
+curl -X PUT http://127.0.0.1:5000/api/v1/estufa/limiares -H "Content-Type: application/json" -d '{"value_min":30.0,"value_max":45.0}'
+
 
 

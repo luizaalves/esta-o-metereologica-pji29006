@@ -2,6 +2,7 @@ from principal.db import db
 from models.grandeza import Grandeza
 from models.module import Module
 from principal.dictionary import Unidade
+from modulos.interfaces import IModule
 
 class Sensor(db.Model):
     __tablename__ = 'Sensor'
@@ -18,6 +19,7 @@ class Sensor(db.Model):
         self.unit = unit
         self.id_module = id_module
         self.description = description
+        self.module = IModule()
     
     def save_db(self):
         db.session.add(self)

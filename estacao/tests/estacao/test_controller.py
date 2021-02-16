@@ -13,7 +13,7 @@ class TestAppControl(TestCase):
 
     # Testes Modulos
     def test_add_module_success(self):
-        new_module = Module("mDHT","https","Teste module add")       
+        new_module = Module("BMP180","https","Teste module add")       
         self.assertTrue(appController.add_module(new_module))
 
     def test_add_module_duplicated(self):
@@ -34,11 +34,11 @@ class TestAppControl(TestCase):
 
     # Testes Sensores
     def test_add_sensor_success(self):
-        new_sensor = Sensor("estufa", "temperatura", "celsius", "mDHT")
+        new_sensor = Sensor("estufa", "temperatura", "celsius", "BMP180")
         self.assertEqual(appController.add_sensor(new_sensor), 1, "Não foi possível inserir sensor")
 
     def test_add_sensor_duplicated(self):
-        new_sensor = Sensor("sala", "temperatura", "celsius", "mDHT")
+        new_sensor = Sensor("sala", "temperatura", "celsius", "BMP180")
         appController.add_sensor(new_sensor)      
         self.assertEqual(appController.add_sensor(new_sensor), 2, "Cadastrou sensor com id_sensor ja cadastrado")
 
@@ -47,8 +47,12 @@ class TestAppControl(TestCase):
        self.assertEqual(appController.add_sensor(new_sensor), 3, "Cadastrou sensor com id_module inexistente")
 
     def test_add_sensor_grandeza_error(self):
-        new_sensor = Sensor("sala2", "proximidade", "celsius", "mDHT")    
+        new_sensor = Sensor("sala2", "proximidade", "celsius", "BMP180")    
         self.assertEqual(appController.add_sensor(new_sensor), 4, "Cadastrou sensor com grandeza inexistente")
+
+    # Testes Leitua de Sensor
+    def test_read_one_sensor_success(self):   
+        self.assertTrue(appController.read_one('estufa') < 100)
 
 if __name__ == '__main__':
     main()

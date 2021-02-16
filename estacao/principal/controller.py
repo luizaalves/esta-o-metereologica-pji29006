@@ -4,6 +4,7 @@ from models.module import Module
 from models.grandeza import Grandeza
 from principal.db import db
 from principal.utils import Medida
+from modulos.drivers import ModulesAvailable
 from principal.dictionary import Unidade
 import logging, logging.config
 
@@ -25,11 +26,11 @@ class AppController:
         if id_new_module in self.modules:
             return False
         self.modules[id_new_module] = new_module
-        #TODO - Inserir lógica para adicionar script python referente ao módulo
-        
+        #TODO - Inserir lógica para fazer download do script python referente ao módulo
         if self.backup:
             logger.info('Salvando novo Módulo (id_module=%s) no banco' % id_new_module)
             new_module.save_db()
+        logger.info('Adicionando novo Módulo (id_module=%s) na Estação' % id_new_module)
         return True
 
     def change_module(self, change_module: Module) -> bool:
@@ -55,22 +56,24 @@ class AppController:
         if self.backup:
             logger.info('Gravando nova Grandeza no banco')
             new_grandeza.save_db()
+        logger.info('Adicionando novo Grandeza na Estação')
         return 1
 
     def add_sensor(self, new_sensor: Sensor) -> int:
         result_verify = self.__verify_sensor(new_sensor)
         if result_verify == 1:
             id_sensor = new_sensor.id_sensor.lower()
+            new_sensor.module = ModulesAvailable.get_instance(new_sensor.id_module)
             self.sensores[id_sensor] = new_sensor
             if self.backup:
                 logger.info('Gravando novo Sensor (id_sensor=%s) no banco' % (id_sensor))
                 new_sensor.save_db()
+            logger.info('Gravando novo Sensor (id_sensor=%s) na Estação' % (id_sensor))
             return result_verify
         return result_verify
     
     def change_sensor(self, change_sensor: Sensor) -> int:
         result_verify = self.__verify_sensor(change_sensor)
-        logger.debug('verify_sensor = %d' % result_verify)
         if result_verify != 2:
             return result_verify
         id_change_sensor = change_sensor.id_sensor.lower()
@@ -84,7 +87,8 @@ class AppController:
         return False
 
     def read_one(self, id_sensor: str) -> str:
-        return None
+        leitura = self.sensores.get(id_sensor.lower()).module.read()
+        return leitura
 
     def read_all(self) -> list:
         return None
@@ -120,18 +124,19 @@ class AppController:
             self.sensores[sensor.id_sensor] = sensor
         
     def __verify_sensor(self, sensor: Sensor) -> int:
+        logger.debug('Verificando informações do Sensor')
         unit_str = sensor.unit.lower()
         type_grandeza = sensor.type_grandeza.lower()
         unit = self.grandezas.get(unit_str)
         if (unit is None) or (type_grandeza != unit.type_grandeza.lower()):
-            logger.warning('Não foi encontrado nenhuma unidade=%s ou tipo=%s' % (unit_str,type_grandeza))
+            logger.debug('Não foi encontrado nenhuma unidade=%s ou tipo=%s' % (unit_str,type_grandeza))
             return 4
         id_module = sensor.id_module.lower()
         if not id_module in self.modules:
-            logger.warning('Não foi encontrado modulo com id_module=%s' % (id_module))
+            logger.debug('Não foi encontrado modulo com id_module=%s' % (id_module))
             return 3
         id_sensor = sensor.id_sensor.lower()
         if id_sensor in self.sensores:
-            logger.warning('Sensor com id_sensor=%s já está cadastrado' % (id_sensor))
+            logger.debug('Sensor com id_sensor=%s já está cadastrado' % (id_sensor))
             return 2
         return 1

@@ -1,5 +1,8 @@
 from enum import Enum
-import logging
+import logging, logging.config
+
+logging.config.fileConfig(fname='logging.conf')
+logger = logging.getLogger(__name__)
 
 class Unidade(Enum):
     metro = 'm'
@@ -7,6 +10,7 @@ class Unidade(Enum):
     celsius = '°C'
     porcent = '%'
     kelvin = 'K'
+    pascal = 'Pa'
 
     @staticmethod
     def has_key(str_unidade: str):
@@ -14,7 +18,7 @@ class Unidade(Enum):
         if unit in Unidade.__members__:
             return Unidade[unit]
         else:
-            logging.error("{} não existe no Enum Unidade".format(str_unidade))
+            logger.error("{} não existe no Enum Unidade".format(str_unidade))
             return None
     
     def __repr__(self):

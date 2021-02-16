@@ -1,7 +1,7 @@
 from modulos.interfaces import IModule
 from random import randint
 
-class BMP180(IModule):
+class HDC1080(IModule):
     def __init__(self):
         self.active = True
        

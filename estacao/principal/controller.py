@@ -28,7 +28,7 @@ class AppController:
         #TODO - Inserir lógica para adicionar script python referente ao módulo
         
         if self.backup:
-            logging.info('Salvando novo Módulo no banco')
+            logger.info('Salvando novo Módulo (id_module=%s) no banco' % id_new_module)
             new_module.save_db()
         return True
 
@@ -40,7 +40,7 @@ class AppController:
         self.modules[id_change_module] = change_module
         #TODO - Inserir lógica para alterar script python referente ao módulo
         if self.backup:
-            logger.info('Salvando Alteração do Módulo no banco')
+            logger.info('Salvando Alteração do Módulo (id_module=%s) no banco' % id_change_module)
             change_module.update_db()
         return True
 
@@ -102,10 +102,10 @@ class AppController:
         logger.info('Carregando Modulos cadastrados')
         list_modules = Module.find_by_all()
         for module in list_modules:
-            self.modules[module.id_module] = module
+            self.modules[module.id_module.lower()] = module
     
     def __load_grandezas(self):
         logger.info('Carregando Grandezas cadastradas')
         list_grandezas = Grandeza.find_by_all()
         for grandeza in list_grandezas:
-            self.grandezas[grandeza.unit] = grandeza
+            self.grandezas[grandeza.unit.lower()] = grandeza

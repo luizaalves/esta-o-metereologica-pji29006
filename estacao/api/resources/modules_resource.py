@@ -1,6 +1,10 @@
 from flask_restful import fields, marshal_with, marshal, reqparse, Resource
 from models.module import Module
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
+import logging, logging.config
+
+logging.config.fileConfig(fname='logging.conf',disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 post_parser = reqparse.RequestParser()
 
@@ -51,6 +55,7 @@ class ModulesAPI(Resource):
 
         new_module =  Module(args.id_module, args.url_codigo_fonte)
         if not self.estacao.add_module(new_module):
+            logger.warn("Erro ao inserir Modulo, id_module %s já existe" % new_module.id_module)
             error = ConflictError(conflit_description)
             return marshal(error, error_fields, 'error'), 409
         return  marshal(new_module, modules_fields), 201

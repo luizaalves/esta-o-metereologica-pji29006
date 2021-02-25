@@ -53,10 +53,10 @@ class AppController:
             return 2
         new_grandeza = Grandeza(new_type, str(unit_new_grandeza.name))
         self.grandezas[unit_new_grandeza.name] = new_grandeza
+        logger.info('Adicionando nova Grandeza na Estação')
         if self.backup:
             logger.info('Gravando nova Grandeza no banco')
             new_grandeza.save_db()
-        logger.info('Adicionando novo Grandeza na Estação')
         return 1
 
     def add_sensor(self, new_sensor: Sensor) -> int:
@@ -99,18 +99,21 @@ class AppController:
             limiar.update_db()
         return 1
 
-    def read_one(self, id_sensor: str) -> str:
-        leitura = self.sensores.get(id_sensor.lower()).module.read()
-        return leitura
+    def read_one(self, id_sensor: str) -> Medida:
+        sensor = self.sensores.get(id_sensor.lower())
+        value_read = sensor.module.read()
+        logger.debug('Valor %d lido para sensor %s' % (value_read,id_sensor))
+        grandeza = self.grandezas.get(sensor.unit.lower())
+        logger.debug('grandeza do sensor %s' % (grandeza))
+        medida = Medida(value_read, grandeza)
+        logger.debug('Medida do sensor %s' % (medida))
+        return medida
 
     def read_all(self) -> list:
         return None
 
     def notify(self, id_sensor: str):
         pass
-
-    def get_sensor(self, id_sensor) -> str:
-        return None
     
     def load_all(self):
         logger.info('Carregando informações em memória')

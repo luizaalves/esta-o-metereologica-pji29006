@@ -46,4 +46,10 @@ curl http://127.0.0.1:5000/api/v1/sensors/estufa-bmp180/limiares -H "Accept: app
 curl -X PUT http://127.0.0.1:5000/api/v1/sensors/estufa/limiares -H "Content-Type: application/json" -d '{"value_min":30.0,"value_max":45.0}'
 
 
+## Medidas
+
+- GET one
+curl http://127.0.0.1:5000/api/v1/sensors/estufa-bmp180/medidas -H "Accept: application/json"
+
+
 

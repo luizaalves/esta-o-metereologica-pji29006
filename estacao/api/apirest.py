@@ -4,6 +4,7 @@ from resources.modules_resource import ModulesAPI
 from resources.sensors_resource import SensorsAPI
 from resources.grandezas_resource import GrandezasAPI
 from resources.limiares_resource import LimiaresAPI
+from resources.medidas_resource import MedidasAPI
 from settings import PREFIX_API_VERSION
 from principal.controller import AppController
 
@@ -24,6 +25,9 @@ api.add_resource(SensorsAPI, '/sensors', '/sensors/<string:id_sensor>',
                                 resource_class_kwargs={'estacao': estacao})
 
 api.add_resource(LimiaresAPI, '/sensors/<string:id_sensor>/limiares',
+                                resource_class_kwargs={'estacao': estacao})
+
+api.add_resource(MedidasAPI, '/sensors/<string:id_sensor>/medidas',
                                 resource_class_kwargs={'estacao': estacao})
 
 if __name__ == '__main__':

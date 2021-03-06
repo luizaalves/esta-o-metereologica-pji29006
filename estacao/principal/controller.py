@@ -6,7 +6,7 @@ from principal.db import db
 from principal.utils import Medida
 from modulos.drivers import ModulesAvailable
 from principal.dictionary import Unidade
-from thread.notification import Notification
+from services.notification import Notification
 import logging, logging.config
 
 logging.config.fileConfig(fname='logging.conf')
@@ -90,7 +90,8 @@ class AppController:
         self.sensores[id_change_sensor] = change_sensor
         if self.backup:
             logger.info('Salvando Alteração do Sensor (id_sensor=%s) no banco' % id_change_sensor)
-            change_sensor.update_db()
+            sensor = Sensor.find_by_id(id_change_sensor)
+            sensor.update_db(change_sensor)
         return result_verify
 
     def config_limiar(self, limiar: Limiar) -> int:

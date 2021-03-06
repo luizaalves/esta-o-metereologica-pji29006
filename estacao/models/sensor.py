@@ -25,10 +25,14 @@ class Sensor(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update_db(self):
-        db.session.flush(self)
+    def update_db(self, change_sensor):
+        db.session.merge(change_sensor)
         db.session.commit()
     
+    @classmethod
+    def find_by_id(cls, id_sensor):
+        return cls.query.filter_by(id_sensor=id_sensor).first()
+
     @classmethod
     def find_by_all(cls):
         return cls.query.all()

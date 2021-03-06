@@ -1,6 +1,6 @@
 ## Modules ##
 - POST
-curl http://127.0.0.1:5000/api/v1/modules -H "Content-Type: application/json" -d '{"id_module":"mDHT2","url_codigo_fonte":"https://"}'
+curl http://127.0.0.1:5000/api/v1/modules -H "Content-Type: application/json" -d '{"id_module":"bmp180","url_codigo_fonte":"https://"}'
 
 - GET all
 curl http://127.0.0.1:5000/api/v1/modules -H "Accept: application/json"
@@ -25,7 +25,7 @@ curl http://127.0.0.1:5000/api/v1/grandezas/temperatura -H "Accept: application/
 
 ## Sensors
 - POST
-curl http://127.0.0.1:5000/api/v1/sensors -H "Content-Type: application/json" -d '{"id_sensor":"estufa","type_grandeza":"temperatura","unit":"farh","id_module":"mDHT2","description":"sensor de temperatura da estufa"}'
+curl http://127.0.0.1:5000/api/v1/sensors -H "Content-Type: application/json" -d '{"id_sensor":"estufa","type_grandeza":"temperatura","unit":"celsius","id_module":"bmp180","description":"sensor de temperatura da estufa"}'
 
 - GET all
 curl http://127.0.0.1:5000/api/v1/sensors -H "Accept: application/json"
@@ -34,7 +34,7 @@ curl http://127.0.0.1:5000/api/v1/sensors -H "Accept: application/json"
 curl http://127.0.0.1:5000/api/v1/sensors/estufa -H "Accept: application/json"
 
 - PUT
-curl -X PUT http://127.0.0.1:5000/api/v1/sensors -H "Content-Type: application/json" -d '{"id_sensor":"estufa","type_grandeza":"temperatura","unit":"farh","id_module":"mDHT2","description":"sensor de temperatura da estufa"}'
+curl -X PUT http://127.0.0.1:5000/api/v1/sensors -H "Content-Type: application/json" -d '{"id_sensor":"estufa","type_grandeza":"temperatura","unit":"celsius","id_module":"bmp180","description":"sensor de temp da estufa"}'
 
 
 ## Limiares

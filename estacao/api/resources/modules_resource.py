@@ -1,5 +1,5 @@
 from flask_restful import fields, marshal_with, marshal, reqparse, Resource
-from models.module import Module
+from models.entities import Module
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 import logging, logging.config
 
@@ -43,7 +43,7 @@ class ModulesAPI(Resource):
             return  marshal(modules, modules_fields, 'modules'), 200
         
         # se receber o parâmetro id_module na URL
-        module = self.estacao.modules.get(id_module, None)
+        module = self.estacao.modules.get(id_module.lower(), None)
         if module is None:
             error = NotFoundError(notfound_description)
             return marshal(error, error_fields, 'error'), 404

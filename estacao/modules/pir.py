@@ -1,4 +1,4 @@
-from modulos.interfaces import IModule
+from modules.interfaces import IModule
 from random import randint
 
 class PIR(IModule):

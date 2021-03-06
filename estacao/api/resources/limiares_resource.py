@@ -1,5 +1,5 @@
 from flask_restful import fields, marshal_with, marshal, reqparse, Resource
-from models.limiar import Limiar
+from models.entities import Limiar
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 
 put_parser = reqparse.RequestParser()

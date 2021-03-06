@@ -1,10 +1,7 @@
-from models.sensor import Sensor
-from models.limiar import Limiar
-from models.module import Module
-from models.grandeza import Grandeza
-from principal.db import db
+from models.entities import Sensor, Limiar, Module, Grandeza
+from principal.db import session
 from principal.utils import Medida
-from modulos.drivers import ModulesAvailable
+from modules.drivers import ModulesAvailable
 from principal.dictionary import Unidade
 from services.notification import Notification
 import logging, logging.config
@@ -27,6 +24,7 @@ class AppController:
         id_new_module = new_module.id_module.lower()
         if id_new_module in self.modules:
             return False
+        new_module.id_module = id_new_module
         self.modules[id_new_module] = new_module
         #TODO - Inserir lógica para fazer download do script python referente ao módulo
         if self.backup:
@@ -40,11 +38,13 @@ class AppController:
         if not id_change_module in self.modules:
             logger.warn('id_module %s não existe' % id_change_module)
             return False
+        change_module.id_module = id_change_module
         self.modules[id_change_module] = change_module
         #TODO - Inserir lógica para alterar script python referente ao módulo
         if self.backup:
             logger.info('Salvando Alteração do Módulo (id_module=%s) no banco' % id_change_module)
-            change_module.update_db()
+            module = Module.find_by_id(id_change_module)
+            module.update_db(change_module)
         return True
 
     def add_grandeza(self, new_type: str, new_unit: str) -> int:
@@ -67,17 +67,16 @@ class AppController:
             id_sensor = new_sensor.id_sensor.lower()
             new_sensor.module = ModulesAvailable.get_instance(new_sensor.id_module)
             limiar = Limiar(id_sensor)
-            self.config_limiar(limiar)
-            if self.backup:
-                logger.debug('Salvando Limiar padrão do Sensor (id_sensor=%s) no banco' % id_sensor)
-                limiar.save_db()
+            new_sensor.id_sensor = id_sensor
             self.sensores[id_sensor] = new_sensor
+            self.limiares[id_sensor] = limiar
+            if self.backup:
+                logger.debug('Gravando novo Sensor (id_sensor=%s) no banco' % (id_sensor))
+                new_sensor.save_db()
+                limiar.save_db()
+            logger.info('Gravando novo Sensor (id_sensor=%s) na Estação' % (id_sensor))
             if len(self.sensores) == 1:
                 self.notification.start()
-            if self.backup:
-                logger.info('Gravando novo Sensor (id_sensor=%s) no banco' % (id_sensor))
-                new_sensor.save_db()
-            logger.info('Gravando novo Sensor (id_sensor=%s) na Estação' % (id_sensor))
             return result_verify
         return result_verify
     
@@ -87,6 +86,7 @@ class AppController:
             return result_verify
         id_change_sensor = change_sensor.id_sensor.lower()
         change_sensor.module = ModulesAvailable.get_instance(change_sensor.id_module)
+        change_sensor.id_sensor = id_change_sensor
         self.sensores[id_change_sensor] = change_sensor
         if self.backup:
             logger.info('Salvando Alteração do Sensor (id_sensor=%s) no banco' % id_change_sensor)
@@ -94,14 +94,17 @@ class AppController:
             sensor.update_db(change_sensor)
         return result_verify
 
-    def config_limiar(self, limiar: Limiar) -> int:
-        id_sensor = limiar.id_sensor.lower()
+    def config_limiar(self, limiar_change: Limiar) -> int:
+        id_sensor = limiar_change.id_sensor.lower()
         if not id_sensor in self.sensores:
             return 2
-        self.limiares[id_sensor] = limiar
+        limiar_change.id_sensor = id_sensor
+        self.limiares[id_sensor] = limiar_change
         if self.backup:
-            logger.info('Salvando Alteração de Limiar do Sensor (id_sensor=%s) no banco' % id_sensor)
-            limiar.update_db()
+            limiar = Limiar.find_by_id(id_sensor)
+            if limiar:
+                logger.info('Salvando Alteração de Limiar do Sensor (id_sensor=%s) no banco' % id_sensor)
+                limiar.update_db(limiar_change)
         return 1
 
     def read_one(self, id_sensor: str) -> Medida:

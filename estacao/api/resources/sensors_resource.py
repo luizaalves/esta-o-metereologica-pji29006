@@ -1,5 +1,5 @@
 from flask_restful import fields, marshal_with, marshal, reqparse, Resource
-from models.sensor import Sensor
+from models.entities import Sensor
 from principal.dictionary import Unidade
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 import logging, logging.config

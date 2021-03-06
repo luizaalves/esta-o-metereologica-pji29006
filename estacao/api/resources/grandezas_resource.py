@@ -1,5 +1,5 @@
 from flask_restful import fields, marshal_with, marshal, reqparse, Resource
-from models.grandeza import Grandeza
+from models.entities import Grandeza
 from principal.dictionary import Unidade
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 

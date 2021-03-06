@@ -1,7 +1,7 @@
-from modulos.interfaces import IModule
+from modules.interfaces import IModule
 from random import randint
 
-class HDC1080(IModule):
+class DHT11(IModule):
     def __init__(self):
         self.active = True
        

@@ -6,6 +6,7 @@ from principal.db import db
 from principal.utils import Medida
 from modulos.drivers import ModulesAvailable
 from principal.dictionary import Unidade
+from thread.notification import Notification
 import logging, logging.config
 
 logging.config.fileConfig(fname='logging.conf')
@@ -20,6 +21,7 @@ class AppController:
         self.sensores = {}
         self.modules = {}
         self.grandezas = {}
+        self.notification = Notification(self.read_interval, self)
 
     def add_module(self, new_module: Module) -> bool:
         id_new_module = new_module.id_module.lower()
@@ -70,6 +72,8 @@ class AppController:
                 logger.debug('Salvando Limiar padrão do Sensor (id_sensor=%s) no banco' % id_sensor)
                 limiar.save_db()
             self.sensores[id_sensor] = new_sensor
+            if len(self.sensores) == 1:
+                self.notification.start()
             if self.backup:
                 logger.info('Gravando novo Sensor (id_sensor=%s) no banco' % (id_sensor))
                 new_sensor.save_db()
@@ -109,11 +113,15 @@ class AppController:
         logger.debug('Medida do sensor %s' % (medida))
         return medida
 
-    def read_all(self) -> list:
-        return None
+    def read_all(self) -> dict:
+        medidas = {}
+        for sensor in self.sensores.values():
+            sensor_id = sensor.id_sensor.lower()
+            medidas[sensor_id] = self.read_one(sensor_id)
+        return medidas
 
-    def notify(self, id_sensor: str):
-        pass
+    def notify(self, id_sensor: str, medida: Medida):
+        logger.info('notify(): id_sensor = %s - medida = %s' % (id_sensor,medida))
     
     def load_all(self):
         logger.info('Carregando informações em memória')
@@ -121,6 +129,8 @@ class AppController:
         self.__load_grandezas()
         self.__load_sensors()
         self.__load_limiares()
+        if self.sensores:
+            self.notification.start()
             
     def __load_modules(self):
         logger.info('Carregando Modulos cadastrados')

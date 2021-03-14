@@ -4,7 +4,10 @@ from principal.utils import Medida
 from modules.drivers import ModulesAvailable
 from principal.dictionary import Unidade
 from services.notification import Notification
+from services.messages import MessageService
 import logging, logging.config
+from settings import SERVICE_NOTIFICATION as NOTIFICATION_START
+from settings import SERVICE_MESSAGE as MESSAGE_START
 
 logging.config.fileConfig(fname='logging.conf')
 logger = logging.getLogger(__name__)
@@ -19,6 +22,10 @@ class AppController:
         self.modules = {}
         self.grandezas = {}
         self.notification = Notification(self.read_interval, self)
+        self.message_service = MessageService()
+        if MESSAGE_START:
+            self.message_service.start()
+
 
     def add_module(self, new_module: Module) -> bool:
         id_new_module = new_module.id_module.lower()
@@ -36,7 +43,7 @@ class AppController:
     def change_module(self, change_module: Module) -> bool:
         id_change_module = change_module.id_module.lower()
         if not id_change_module in self.modules:
-            logger.warn('id_module %s não existe' % id_change_module)
+            logger.debug('id_module %s não existe' % id_change_module)
             return False
         change_module.id_module = id_change_module
         self.modules[id_change_module] = change_module
@@ -75,7 +82,7 @@ class AppController:
                 new_sensor.save_db()
                 limiar.save_db()
             logger.info('Gravando novo Sensor (id_sensor=%s) na Estação' % (id_sensor))
-            if len(self.sensores) == 1:
+            if (len(self.sensores) == 1) and NOTIFICATION_START:
                 self.notification.start()
             return result_verify
         return result_verify
@@ -133,7 +140,7 @@ class AppController:
         self.__load_grandezas()
         self.__load_sensors()
         self.__load_limiares()
-        if self.sensores:
+        if self.sensores and NOTIFICATION_START:
             self.notification.start()
             
     def __load_modules(self):

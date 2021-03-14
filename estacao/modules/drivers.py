@@ -17,3 +17,6 @@ class ModulesAvailable:
         if(module == "PIR"):
             from modules.pir import PIR
             return PIR()
+        if(module == "BMP280"):
+            from modules.bmp280 import BMP280
+            return BMP280()

@@ -1,6 +1,9 @@
 from flask_restful import fields, marshal_with, marshal, reqparse, Resource
 from models.entities import Limiar
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
+import logging, logging.config
+logging.config.fileConfig(fname='logging.conf')
+logger = logging.getLogger(__name__)
 
 put_parser = reqparse.RequestParser()
 
@@ -40,6 +43,7 @@ class LimiaresAPI(Resource):
     def put(self, id_sensor):
         args = put_parser.parse_args()
         change_limiar =  Limiar(id_sensor, args.value_min, args.value_max)
+        logger.debug('Limiar %s' % change_limiar)
         result_change = self.estacao.config_limiar(change_limiar)
         if result_change == 2:
             error = NotFoundError(notfound_description)

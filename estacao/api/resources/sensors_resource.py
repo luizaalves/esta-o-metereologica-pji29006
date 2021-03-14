@@ -4,6 +4,7 @@ from principal.dictionary import Unidade
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 import logging, logging.config
 
+
 logging.config.fileConfig(fname='logging.conf')
 logger = logging.getLogger(__name__)
 

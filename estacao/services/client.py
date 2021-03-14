@@ -1,6 +1,7 @@
 import pika
 import uuid
 import logging, logging.config
+import json
 from settings import RABBIT_SERVER
 from pika import BlockingConnection, ConnectionParameters, PlainCredentials, BasicProperties
 
@@ -25,7 +26,7 @@ class Client(object):
         if self.corr_id == props.correlation_id:
             self.response = body
 
-    def call(self, n):
+    def call(self, request_path, request_method, request_body):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
@@ -34,8 +35,10 @@ class Client(object):
             properties=BasicProperties(
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
+                content_type='application/json',
+                headers={'Method': request_method, 'Path': request_path}
             ),
-            body=str(n))
+            body=json.dumps(request_body))
         while self.response is None:
             self.connection.process_data_events()
-        return int(self.response)
+        return self.response

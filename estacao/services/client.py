@@ -24,10 +24,12 @@ class Client(object):
 
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
-            self.response = body
+            self.response = True
+            self.response_body = body
+            self.response_status = props.headers['Status']
 
     def call(self, request_path, request_method, request_body):
-        self.response = None
+        self.response = False
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
             exchange='',
@@ -39,6 +41,6 @@ class Client(object):
                 headers={'Method': request_method, 'Path': request_path}
             ),
             body=json.dumps(request_body))
-        while self.response is None:
+        while not self.response:
             self.connection.process_data_events()
-        return self.response
+        return self.response_body, self.response_status

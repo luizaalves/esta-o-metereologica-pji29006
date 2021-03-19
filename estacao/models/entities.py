@@ -1,6 +1,6 @@
 from modules.interfaces import IModule
 from principal.db import session
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, event
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -16,7 +16,7 @@ class Module(Base):
         self.id_module = id_module
         self.description = description
         self.url_codigo_fonte = url_codigo_fonte
-
+    
     def save_db(self):
         session.add(self)
         session.commit()
@@ -132,9 +132,16 @@ class Limiar(Base):
     def __repr__(self):
         return 'Limiar("%s","%s","%s")' % (self.id_sensor,self.value_min, self.value_max)
 
+def add_module():
+    module = Module(id_module='BMP280', url_codigo_fonte='https', description='Módulo para sensor BMP280')
+    session.add(module)
+    session.commit()
+
 if __name__ == "__main__":
     from sqlalchemy import create_engine
     from settings import SQLALCHEMY_DATABASE_URI as DB_URI
     engine = create_engine(DB_URI,connect_args={'check_same_thread':False})
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
+    add_module()
+

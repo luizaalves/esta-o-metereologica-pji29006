@@ -1,10 +1,10 @@
 from flask import Flask, Request
 from flask_restful import Resource, Api
-from resources.modules_resource import ModulesAPI
-from resources.sensors_resource import SensorsAPI
-from resources.grandezas_resource import GrandezasAPI
-from resources.limiares_resource import LimiaresAPI
-from resources.medidas_resource import MedidasAPI
+from .resources.modules_resource import ModulesAPI
+from .resources.sensors_resource import SensorsAPI
+from .resources.grandezas_resource import GrandezasAPI
+from .resources.limiares_resource import LimiaresAPI
+from .resources.medidas_resource import MedidasAPI
 from settings import PREFIX_API_VERSION, API_DEBUG
 from principal.controller import AppController
 
@@ -33,4 +33,6 @@ api.add_resource(MedidasAPI, '/sensors/<string:id_sensor>/medidas',
 if __name__ == '__main__':
     with app.app_context():
         estacao.load_all()
-    app.run(debug=API_DEBUG)
+    app.config['DEBUG'] = True
+    app.logger.level = logging.DEBUG
+    

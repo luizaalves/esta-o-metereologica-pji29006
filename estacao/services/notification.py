@@ -2,8 +2,9 @@ from threading import Thread
 from principal.utils import Medida
 import time
 import logging, logging.config
+from settings import LOGGING_CONF
 
-logging.config.fileConfig(fname='logging.conf')
+logging.config.fileConfig(fname=LOGGING_CONF)
 logger = logging.getLogger(__name__)
 
 class Notification(Thread):

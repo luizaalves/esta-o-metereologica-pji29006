@@ -47,7 +47,10 @@ class MessageService(Thread):
             request_body_json = json.loads(body)
             logger.debug("body_json = %s" % request_body_json)
             response = put(url,json=request_body_json)
-            response_body = ''
+            if response.status_code == 204:
+                response_body = ''
+            else:
+                response_body = response.json()
         
         logger.debug("Response = %s" % response)
         

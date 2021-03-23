@@ -1,12 +1,13 @@
 from flask import Flask, Request
 from flask_restful import Resource, Api
-from .resources.modules_resource import ModulesAPI
-from .resources.sensors_resource import SensorsAPI
-from .resources.grandezas_resource import GrandezasAPI
-from .resources.limiares_resource import LimiaresAPI
-from .resources.medidas_resource import MedidasAPI
+from api.resources.modules_resource import ModulesAPI
+from api.resources.sensors_resource import SensorsAPI
+from api.resources.grandezas_resource import GrandezasAPI
+from api.resources.limiares_resource import LimiaresAPI
+from api.resources.medidas_resource import MedidasAPI
 from settings import PREFIX_API_VERSION, API_DEBUG
 from principal.controller import AppController
+import logging, logging.config
 
 app = Flask(__name__)
 app.config.from_pyfile('../settings.py')
@@ -35,4 +36,5 @@ if __name__ == '__main__':
         estacao.load_all()
     app.config['DEBUG'] = True
     app.logger.level = logging.DEBUG
+    app.run()
     

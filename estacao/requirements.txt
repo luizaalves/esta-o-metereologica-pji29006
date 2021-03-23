@@ -5,3 +5,5 @@ flask-sqlalchemy
 sqlalchemy
 pika
 requests
+uwsgi
+gunicorn

@@ -2,7 +2,9 @@ from flask_restful import fields, marshal_with, marshal, reqparse, Resource
 from models.entities import Limiar
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 import logging, logging.config
-logging.config.fileConfig(fname='logging.conf')
+from settings import LOGGING_CONF
+
+logging.config.fileConfig(fname=LOGGING_CONF)
 logger = logging.getLogger(__name__)
 
 put_parser = reqparse.RequestParser()

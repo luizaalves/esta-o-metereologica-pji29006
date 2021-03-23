@@ -9,7 +9,7 @@ import logging, logging.config
 from settings import SERVICE_NOTIFICATION as NOTIFICATION_START
 from settings import SERVICE_MESSAGE as MESSAGE_START
 
-logging.config.fileConfig(fname='logging.conf')
+logging.config.fileConfig(fname='logging.ini')
 logger = logging.getLogger(__name__)
 
 class AppController:
@@ -23,6 +23,7 @@ class AppController:
         self.grandezas = {}
         self.notification = Notification(self.read_interval, self)
         self.message_service = MessageService()
+        self.load_all()
         if MESSAGE_START:
             self.message_service.start()
 

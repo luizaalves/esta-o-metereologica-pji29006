@@ -3,9 +3,10 @@ from models.entities import Sensor
 from principal.dictionary import Unidade
 from api.resources.errors import NotFoundError, BadRequestError, ConflictError, InternalServerError
 import logging, logging.config
+from settings import LOGGING_CONF
 
 
-logging.config.fileConfig(fname='logging.conf')
+logging.config.fileConfig(fname=LOGGING_CONF)
 logger = logging.getLogger(__name__)
 
 post_parser = reqparse.RequestParser()

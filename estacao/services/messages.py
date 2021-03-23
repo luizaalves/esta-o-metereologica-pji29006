@@ -4,8 +4,9 @@ import json
 from requests import get, put
 from settings import RABBIT_SERVER, API_PORT
 from pika import BlockingConnection, ConnectionParameters, PlainCredentials, BasicProperties
+from settings import LOGGING_CONF
 
-logging.config.fileConfig(fname='logging.conf')
+logging.config.fileConfig(fname=LOGGING_CONF)
 logger = logging.getLogger(__name__)
 
 class MessageService(Thread):

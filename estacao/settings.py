@@ -1,9 +1,16 @@
+ENVIRONMENT='PRODUCTION'
+
+if ENVIRONMENT == 'PRODUCTION':
+    DB_PATH='/estacao/estacao.db'
+else:
+    DB_PATH='estacao.db'
+
 PREFIX_API_VERSION = '/api/v1'
 API_PORT = 5000
 API_DEBUG = True
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = 'sqlite:///estacao.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DB_PATH
 
 RABBIT_SERVER = {
     'HOST' : 'us127.serverdo.in',

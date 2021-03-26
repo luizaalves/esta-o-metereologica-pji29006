@@ -1,7 +1,7 @@
 # Em construção
 ## Sistema Estação Meteorológica
 
-Este diretório contém o código-fonte do sistema estação meteorológica. A seguir estão descritos as informações para Instalar e configurar o sistema numa placa Raspberry PI. 
+Este diretório contém o código-fonte do sistema estação meteorológica. A seguir estão descritos as informações para Instalar e configurar o sistema numa placa Raspberry PI.
 
 ## Requisitos
 
@@ -12,14 +12,27 @@ Este diretório contém o código-fonte do sistema estação meteorológica. A s
 
 ## Instalação
 
-1. Faça o download do reporsitório do projeto e acesse este diretório.
+1. Faça o download do reporsitório do projeto e acesse o diretório.
 
 	```bash
 	$ git clone https://github.com/PJI29006-classroom/2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza.git
-	$ cd ./2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza/estacao
+	
+	$ cd ./2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza
 	```
 
-2. Edite o arquivo `settyngs.py` alterando as informações referentes ao servidor de mensagens.
+2. Execute o script para instalação do Sistema Estação no diretório `/estacao`.
+
+	```bash
+	$ sudo ./install-estacao.sh
+	```
+
+3. Acesse o diretório de implantação (`/estacao`).
+
+	```bash
+	$ cd /estacao
+	```
+
+4. Edite o arquivo `settings.py` alterando as informações referentes ao servidor de mensagens.
 
 	```python
 	RABBIT_SERVER = {
@@ -29,17 +42,30 @@ Este diretório contém o código-fonte do sistema estação meteorológica. A s
 		'PASS' : 'Password'
 	}
 	```
-	**Obs.:** Este projeto foi desenvolvido utilizando o broker de mensagens do [RabbitMQ](https://www.rabbitmq.com/), especificamente com as implementações de [RPC](https://www.rabbitmq.com/tutorials/tutorial-six-python.html) e [Publish/Subscribe](https://www.rabbitmq.com/tutorials/tutorial-three-python.html). Para outras implementações será preciso alterações no código.
+	**Obs.:** Este projeto foi desenvolvido utilizando o broker de mensagens do [RabbitMQ](https://www.rabbitmq.com/), especificamente com as implementações de [RPC](https://www.rabbitmq.com/tutorials/tutorial-six-python.html) e [Publish/Subscribe](https://www.rabbitmq.com/tutorials/tutorial-three-python.html). Para outras implementações é necessário testar a compatibilidade e se preciso alterar o código.
 
-3. Crie um ambiente virtual e ative-o para instalação dos pacotes necessários.
-
-    ```bash
-    $ virtualenv -p python3 venv
-    $ source venv/bin/activate
-    ```
-
-4. Instale os requisitos do sistema instação usando pip. 
+5. Execute o script para iniciar o Sistema Estação
 
 	```bash
-	(venv)$ pip3 install -r requirements.txt
+	$ sudo ./start-estacao.sh
+	```
+
+## Teste
+
+O Sistema Estação é administrado por meio de API REST conforme descrito na [documentação](https://estacao.docs.apiary.io/) e as requsições estarão disponíveis somente na rede local da Rasp. Segue um exemplo de requisição para verificar se a instalação foi bem sucedida.
+
+**Obs.:** Substitua `localhost` pelo IP da Rasp se estiver executando em outro computador da rede local.
+
+```bash
+$ curl http://localhost:5000/api/v1/modules -H "Accept: application/json"
+```
+
+## Logs e comandos
+
+O Sistema Estação instalado seguindo as instruções deste documento é executado como um serviço do Systemd. Seguem alguns comandos que podem ser úteis para administração do serviço.
+
+1. Verificar logs do serviço:
+
+	```bash
+	$ sudo sudo journalctl -f -u estacao
 	```

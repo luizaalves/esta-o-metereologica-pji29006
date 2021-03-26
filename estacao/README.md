@@ -1,4 +1,3 @@
-# Em construção
 ## Sistema Estação Meteorológica
 
 Este diretório contém o código-fonte do sistema estação meteorológica. A seguir estão descritos as informações para Instalar e configurar o sistema numa placa Raspberry PI.
@@ -20,7 +19,7 @@ Este diretório contém o código-fonte do sistema estação meteorológica. A s
 	$ cd ./2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza
 	```
 
-2. Execute o script para instalação do Sistema Estação no diretório `/estacao`.
+2. Execute o script para instalação do Sistema Estação.
 
 	```bash
 	$ sudo ./install-estacao.sh
@@ -70,7 +69,7 @@ O Sistema Estação instalado seguindo as instruções deste documento é execut
 	$ sudo journalctl -f -u estacao
 	```
 
-2. Para, reiniciar ou iniciar o serviço.
+2. Parar, reiniciar ou iniciar o serviço.
 
 	```bash
 	$ sudo systemctl [stop|restart|start] estacao

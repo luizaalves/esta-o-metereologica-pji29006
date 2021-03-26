@@ -1,7 +1,7 @@
 # Em construção
 ## Sistema Estação Meteorológica
 
-Este diretório contém o código-fonte do sistema estação meteorológica. A seguir estão descritos as informações para Instalar e configurar o sistema numa placa Raspberry PI.
+Este diretório contém o código-fonte do sistema estação meteorológica. A seguir estão descritos os [Requisitos](#requisitos) e etapas para [Instalação](#instalação) do sistema numa placa Raspberry PI. Caso você já tenha uma versão instalada e deseja atualizar, execute a seção [Atualização](#atualização). Exemplo de como efetuar um teste para validar a isntalação e comandos para verificar logs podem ser encontrados nas seções [Teste](#teste) e [Logs e comandos](#logs-e-comandos).
 
 ## Requisitos
 
@@ -12,15 +12,15 @@ Este diretório contém o código-fonte do sistema estação meteorológica. A s
 
 ## Instalação
 
-1. Faça o download do reporsitório do projeto e acesse o diretório.
+1. Faça o download do repositório do projeto na versão mais atual e acesse o diretório.
 
 	```bash
-	$ git clone https://github.com/PJI29006-classroom/2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza.git
+	$ git clone -b estacao-v2.0.1 --single-branch https://github.com/PJI29006-classroom/2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza.git estacao-v2.0.1 
 	
-	$ cd ./2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza
+	$ cd ./estacao-v2.0.2
 	```
 
-2. Execute o script para instalação do Sistema Estação no diretório `/estacao`.
+2. Execute o script para instalação do Sistema Estação.
 
 	```bash
 	$ sudo ./install-estacao.sh
@@ -49,6 +49,24 @@ Este diretório contém o código-fonte do sistema estação meteorológica. A s
 	```bash
 	$ sudo ./start-estacao.sh
 	```
+
+## Atualização
+
+1. Faça o download do repositório do projeto na versão mais atual e acesse o diretório.
+
+	```bash
+	$ git clone -b estacao-v2.0.1 --single-branch https://github.com/PJI29006-classroom/2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza.git estacao-v2.0.2 
+	
+	$ cd ./estacao-v2.0.2
+	```
+
+2. Execute o script para atualização do Sistema Estação.
+
+	```bash
+	$ sudo ./update-estacao.sh
+	```
+
+**Obs.:** O script de atualização cria um arquivo compactado com backup do diretório de implantação com o seguinte nome - `/estacao/backup-AAAA-MM-DD.tar.gz`.
 
 ## Teste
 

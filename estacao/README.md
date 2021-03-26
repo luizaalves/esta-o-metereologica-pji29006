@@ -1,4 +1,3 @@
-# Em construção
 ## Sistema Estação Meteorológica
 
 Este diretório contém o código-fonte do sistema estação meteorológica. A seguir estão descritos os [Requisitos](#requisitos) e etapas para [Instalação](#instalação) do sistema numa placa Raspberry PI. Caso você já tenha uma versão instalada e deseja atualizar, execute a seção [Atualização](#atualização). Exemplo de como efetuar um teste para validar a isntalação e comandos para verificar logs podem ser encontrados nas seções [Teste](#teste) e [Logs e comandos](#logs-e-comandos).
@@ -88,7 +87,7 @@ O Sistema Estação instalado seguindo as instruções deste documento é execut
 	$ sudo journalctl -f -u estacao
 	```
 
-2. Para, reiniciar ou iniciar o serviço.
+2. Parar, reiniciar ou iniciar o serviço.
 
 	```bash
 	$ sudo systemctl [stop|restart|start] estacao

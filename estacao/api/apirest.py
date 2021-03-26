@@ -32,8 +32,8 @@ api.add_resource(MedidasAPI, '/sensors/<string:id_sensor>/medidas',
                                 resource_class_kwargs={'estacao': estacao})
 
 if __name__ == '__main__':
-    with app.app_context():
-        estacao.load_all()
+    #with app.app_context():
+    #   estacao.load_all()
     app.config['DEBUG'] = True
     app.logger.level = logging.DEBUG
     app.run()

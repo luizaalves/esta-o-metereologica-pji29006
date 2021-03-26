@@ -1,10 +1,9 @@
 from threading import Thread
-import logging, logging.config
-import json
 from requests import get, put
-from settings import RABBIT_SERVER, API_PORT
+from settings import LOGGING_CONF, RABBIT_SERVER, API_PORT
 from pika import BlockingConnection, ConnectionParameters, PlainCredentials, BasicProperties
-from settings import LOGGING_CONF
+
+import logging, logging.config, json
 
 logging.config.fileConfig(fname=LOGGING_CONF)
 logger = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ from principal.db import session
 from principal.utils import Medida
 from modules.drivers import ModulesAvailable
 from principal.dictionary import Unidade
-from services.notification import Notification
+from services.notification import NotificationService
 from services.messages import MessageService
 import logging, logging.config
 from settings import SERVICE_NOTIFICATION as NOTIFICATION_START
@@ -21,12 +21,11 @@ class AppController:
         self.sensores = {}
         self.modules = {}
         self.grandezas = {}
-        self.notification = Notification(self.read_interval, self)
+        self.notification_service = NotificationService(self.read_interval, self)
         self.message_service = MessageService()
         self.load_all()
         if MESSAGE_START:
             self.message_service.start()
-
 
     def add_module(self, new_module: Module) -> bool:
         id_new_module = new_module.id_module.lower()
@@ -131,9 +130,6 @@ class AppController:
             sensor_id = sensor.id_sensor.lower()
             medidas[sensor_id] = self.read_one(sensor_id)
         return medidas
-
-    def notify(self, id_sensor: str, medida: Medida):
-        logger.info('notify(): id_sensor = %s - medida = %s' % (id_sensor,medida))
     
     def load_all(self):
         logger.info('Carregando informações em memória')
@@ -142,7 +138,7 @@ class AppController:
         self.__load_sensors()
         self.__load_limiares()
         if self.sensores and NOTIFICATION_START:
-            self.notification.start()
+            self.notification_service.start()
             
     def __load_modules(self):
         logger.info('Carregando Modulos cadastrados')

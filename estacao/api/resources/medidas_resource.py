@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 medida_fields = {
     'type_grandeza': fields.String,
     'value': fields.Float,
-    'unit': fields.String(x.name for x in Unidade),
+    'unit': fields.String(x.name for x in Unidade)
 }
 error_fields = {
     'code': fields.Integer,

@@ -1,6 +1,6 @@
-ENVIRONMENT='PRODUCTION'
+PRODUCTION=True
 
-if ENVIRONMENT == 'PRODUCTION':
+if PRODUCTION:
     DB_PATH='/estacao/estacao.db'
 else:
     DB_PATH='estacao.db'
@@ -18,9 +18,10 @@ RABBIT_SERVER = {
     'USER' : 'admin',
     'PASS' : 'pji29006'
 }
+EXCHANGE_NOTIFICATIONS='notifications'
 
-SERVICE_NOTIFICATION = False
-SERVICE_MESSAGE = True
+SERVICE_NOTIFICATION = True
+SERVICE_MESSAGE = False
 LOGGING_CONF = 'logging.ini'
 
 

@@ -33,7 +33,7 @@ class GrandezasAPI(Resource):
     def get(self, type_grandeza=None):
         if type_grandeza is None:
             grandezas = list(self.estacao.grandezas.values())
-            return  marshal(grandezas, grandeza_fields, 'modules'), 200
+            return  marshal(grandezas, grandeza_fields, 'grandezas'), 200
         
         # se receber o parâmetro type_grandeza na URL
         

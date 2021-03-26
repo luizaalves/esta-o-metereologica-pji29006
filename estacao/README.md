@@ -67,5 +67,11 @@ O Sistema Estação instalado seguindo as instruções deste documento é execut
 1. Verificar logs do serviço:
 
 	```bash
-	$ sudo sudo journalctl -f -u estacao
+	$ sudo journalctl -f -u estacao
+	```
+
+2. Para, reiniciar ou iniciar o serviço.
+
+	```bash
+	$ sudo systemctl [stop|restart|start] estacao
 	```

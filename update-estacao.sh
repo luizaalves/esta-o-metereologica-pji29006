@@ -17,8 +17,9 @@ systemctl stop estacao
 if [ -d "${ESTACAO_HOMEDIR}" ]
 then
 	echo "Diretório ${ESTACAO_HOMEDIR} encontrado"
-    echo "Criando backup "
-    tar cfz ${BACKUP_FILE} ${ESTACAO_HOMEDIR}
+    echo "Criando backup em ${BACKUP_FILE}"
+    echo "Atenção! Esta etapa pode demorar alguns minutos....."
+    tar cfzP ${BACKUP_FILE} ${ESTACAO_HOMEDIR}
 else
 	echo "Diretório de implantação (${ESTACAO_HOMEDIR}) não encontrado"
     echo "Se não possuir nenhum instalação so sistema, execute o script de instalação."

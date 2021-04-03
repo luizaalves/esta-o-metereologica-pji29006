@@ -1,4 +1,5 @@
 from modules.interfaces import IModule
+from modules.drivers import ModulesAvailable
 from principal.db import session
 from sqlalchemy import Column, Integer, String, Float, event
 from sqlalchemy.ext.declarative import declarative_base
@@ -16,6 +17,7 @@ class Module(Base):
         self.id_module = id_module
         self.description = description
         self.url_codigo_fonte = url_codigo_fonte
+        self.driver = IModule()                     # Instância do driver para o Sensor
     
     def save_db(self):
         session.add(self)
@@ -77,7 +79,7 @@ class Sensor(Base):
         self.unit = unit
         self.id_module = id_module
         self.description = description
-        self.module = IModule()
+        self.module_driver = IModule()
     
     def save_db(self):
         session.add(self)
@@ -134,6 +136,7 @@ class Limiar(Base):
 
 def add_module():
     module = Module(id_module='BMP280', url_codigo_fonte='https', description='Módulo para sensor BMP280')
+    module.driver = ModulesAvailable.get_instance('BMP280')
     session.add(module)
     session.commit()
 

@@ -1,5 +1,5 @@
 # False para Desenvolvimento
-PRODUCTION=False
+PRODUCTION=True
 
 if PRODUCTION:
     DB_PATH='/estacao/estacao.db'
@@ -17,7 +17,7 @@ LOGGING_CONF = 'logging.ini'
 
 # Ativação dos Serviços de Mensagens para requisições (MESSAGE) ou Notificações(NOTIFICATION)
 SERVICE_MESSAGE = True
-SERVICE_NOTIFICATION = False
+SERVICE_NOTIFICATION = True
 
 # Altere para informações do Servidor de Fila de Mensagens (Broker)
 # Projeto utiliza o broker do RabbitMQ

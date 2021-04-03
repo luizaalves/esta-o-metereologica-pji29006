@@ -28,18 +28,25 @@ class AppController:
         if MESSAGE_START:
             self.message_service.start()
 
-    def add_module(self, new_module: Module) -> bool:
+    def add_module(self, new_module: Module) -> int:
         id_new_module = new_module.id_module.lower()
         if id_new_module in self.modules:
-            return False
+            return 2
         new_module.id_module = id_new_module
+        try:
+            new_module.driver = ModulesAvailable.get_instance(id_new_module)
+        except Exception as e:
+            logger.error(e)
+            logger.error('O Módulo %s não está implementado ou nome da classe está incorreto' % id_new_module)
+            return 3
+
         self.modules[id_new_module] = new_module
         #TODO - Inserir lógica para fazer download do script python referente ao módulo
         if self.backup:
             logger.info('Salvando novo Módulo (id_module=%s) no banco' % id_new_module)
             new_module.save_db()
         logger.info('Adicionando novo Módulo (id_module=%s) na Estação' % id_new_module)
-        return True
+        return 1
 
     def change_module(self, change_module: Module) -> bool:
         id_change_module = change_module.id_module.lower()
@@ -73,7 +80,11 @@ class AppController:
         result_verify = self.__verify_sensor(new_sensor)
         if result_verify == 1:
             id_sensor = new_sensor.id_sensor.lower()
-            new_sensor.module = ModulesAvailable.get_instance(new_sensor.id_module)
+            #new_sensor.module = ModulesAvailable.get_instance(new_sensor.id_module)
+            id_module = new_sensor.id_module.lower()
+            module_driver = self.modules.get(id_module).driver
+            logger.debug('Link module %s ao sensor' % (module_driver))
+            new_sensor.module_driver = module_driver
             limiar = Limiar(id_sensor)
             new_sensor.id_sensor = id_sensor
             self.sensores[id_sensor] = new_sensor
@@ -93,7 +104,7 @@ class AppController:
         if result_verify != 2:
             return result_verify
         id_change_sensor = change_sensor.id_sensor.lower()
-        change_sensor.module = ModulesAvailable.get_instance(change_sensor.id_module)
+        change_sensor.module_driver = self.modules.get(change_sensor.id_module).driver
         change_sensor.id_sensor = id_change_sensor
         self.sensores[id_change_sensor] = change_sensor
         if self.backup:
@@ -118,7 +129,7 @@ class AppController:
     def read_one(self, id_sensor: str) -> Medida:
         sensor = self.sensores.get(id_sensor.lower())
         logger.debug('Lendo Sensor %s' % id_sensor)
-        value_read = sensor.module.read()
+        value_read = sensor.module_driver.read()
         logger.debug('Valor %d lido para sensor %s' % (value_read,id_sensor))
         grandeza = self.grandezas.get(sensor.unit.lower())
         logger.debug('grandeza do sensor %s' % (grandeza))
@@ -146,6 +157,7 @@ class AppController:
         logger.info('Carregando Modulos cadastrados')
         list_modules = Module.find_by_all()
         for module in list_modules:
+            module.driver = ModulesAvailable.get_instance(module.id_module)
             self.modules[module.id_module.lower()] = module
     
     def __load_grandezas(self):
@@ -158,7 +170,7 @@ class AppController:
         logger.info('Carregando Sensores cadastradas')
         list_sensors = Sensor.find_by_all()
         for sensor in list_sensors:
-            sensor.module = ModulesAvailable.get_instance(sensor.id_module)
+            sensor.module_driver = self.modules.get(sensor.id_module).driver
             self.sensores[sensor.id_sensor] = sensor
 
     def __load_limiares(self):

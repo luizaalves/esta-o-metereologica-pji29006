@@ -32,6 +32,7 @@ error_fields = {
 }
 conflit_description = "Módulo com mesmo id_module já cadastrado"
 notfound_description = "id_module não encontrado ou inválido"
+internalserver_description = "Erro ao validar módulo. Consulte Logs do Sistema"
 
 class ModulesAPI(Resource):
     def __init__(self, **kwargs):
@@ -55,10 +56,15 @@ class ModulesAPI(Resource):
         args = post_parser.parse_args()
 
         new_module =  Module(args.id_module, args.url_codigo_fonte)
-        if not self.estacao.add_module(new_module):
+        result = self.estacao.add_module(new_module)
+        if result == 2:
             logger.warn("Erro ao inserir Modulo, id_module %s já existe" % new_module.id_module)
             error = ConflictError(conflit_description)
             return marshal(error, error_fields, 'error'), 409
+        elif result == 3:
+            logger.error("Erro ao instanciar Módulo")
+            error = InternalServerError(internalserver_description)
+            return marshal(error, error_fields, 'error'), 500
         return  marshal(new_module, modules_fields), 201
 
     def put(self):

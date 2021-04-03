@@ -8,12 +8,13 @@ from services.messages import MessageService
 import logging, logging.config
 from settings import SERVICE_NOTIFICATION as NOTIFICATION_START
 from settings import SERVICE_MESSAGE as MESSAGE_START
+from settings import INTERVAL
 
 logging.config.fileConfig(fname='logging.ini')
 logger = logging.getLogger(__name__)
 
 class AppController:
-    def __init__(self, read_interval=1, backup=True):
+    def __init__(self, read_interval=INTERVAL, backup=True):
 
         self.read_interval = read_interval
         self.backup = backup
@@ -116,6 +117,7 @@ class AppController:
 
     def read_one(self, id_sensor: str) -> Medida:
         sensor = self.sensores.get(id_sensor.lower())
+        logger.debug('Lendo Sensor %s' % id_sensor)
         value_read = sensor.module.read()
         logger.debug('Valor %d lido para sensor %s' % (value_read,id_sensor))
         grandeza = self.grandezas.get(sensor.unit.lower())

@@ -9,5 +9,6 @@ from settings import SQLALCHEMY_DATABASE_URI as DB_URI
 
 Session = sessionmaker(autocommit=False,
                        autoflush=False,
+                       expire_on_commit=False,
                        bind=create_engine(DB_URI,connect_args={'check_same_thread':False}))
 session = scoped_session(Session)

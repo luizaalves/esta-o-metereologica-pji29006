@@ -17,12 +17,12 @@ class MessageService(Thread):
         parameters = ConnectionParameters(RABBIT_SERVER['HOST'],RABBIT_SERVER['PORT'],credentials=credentials)
         self.connection = BlockingConnection(parameters)
         self.channel = self.connection.channel()
-        self.channel.queue_declare(queue='rpc_queue')
+        self.channel.queue_declare(queue='rpc_queue1')
 
     def run(self):
         logger.info("Iniciando Serviço de Mensagens")
         self.channel.basic_qos(prefetch_count=1)
-        self.channel.basic_consume(queue='rpc_queue', on_message_callback=self.request_callback)
+        self.channel.basic_consume(queue='rpc_queue1', on_message_callback=self.request_callback)
 
         logger.info("Aguardando Requisições")
         self.channel.start_consuming()

@@ -9,6 +9,7 @@ import logging, logging.config
 from settings import SERVICE_NOTIFICATION as NOTIFICATION_START
 from settings import SERVICE_MESSAGE as MESSAGE_START
 from settings import INTERVAL
+from pika.exceptions import AMQPConnectionError, AMQPChannelError
 
 logging.config.fileConfig(fname='logging.ini')
 logger = logging.getLogger(__name__)
@@ -22,11 +23,10 @@ class AppController:
         self.sensores = {}
         self.modules = {}
         self.grandezas = {}
-        self.notification_service = NotificationService(self.read_interval, self)
-        self.message_service = MessageService()
-        self.load_all()
-        if MESSAGE_START:
-            self.message_service.start()
+
+        self.__start_services()
+        self.load_all()       
+            
 
     def add_module(self, new_module: Module) -> int:
         id_new_module = new_module.id_module.lower()
@@ -196,3 +196,19 @@ class AppController:
             logger.debug('Sensor com id_sensor=%s já está cadastrado' % (id_sensor))
             return 2
         return 1
+    
+    def __start_services(self):
+        if MESSAGE_START:
+            try:
+                logger.info("Criando Serviço de Mensagens")
+                self.message_service = MessageService()
+            except AMQPConnectionError:
+                logger.error("Não foi possível criar o Serviço de Mensagens para requisições! Verifique configurações e reinicie o Serviço!")
+            else:
+                self.message_service.start()
+
+        if NOTIFICATION_START:
+            try:
+                self.notification_service = NotificationService(self.read_interval, self)
+            except AMQPConnectionError:
+                logger.error("Erro ao iniciar Broker Channel. Verifique configurações e reinicie o serviço!")

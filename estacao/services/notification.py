@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class NotificationService(Thread):
     def __init__(self, read_interval, controller):
-        Thread.__init__(self)
+        Thread.__init__(self, daemon=True)
         self.read_interval = read_interval
         self.app_controller = controller
         logger.info("Thread Notification Service Create")

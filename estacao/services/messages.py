@@ -12,6 +12,13 @@ logging.config.fileConfig(fname=LOGGING_CONF)
 logger = logging.getLogger(__name__)
 
 class MessageService(Thread):
+    """Classe do Serviço de Mensagens para Requisições externas.
+       O código representa o Servidor e
+       foi construido utilizando a implementação de RPC do rabbitMQ.
+
+    Args:
+        Thread : Extende a classe Thread para o serviço ficar rodando como outro processo.
+    """
     def __init__(self):
         Thread.__init__(self, daemon=True)
 
@@ -65,7 +72,7 @@ class MessageService(Thread):
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def __create_connection(self):
-        
+        logger.info("Conectando ao broker...")
         try:
             connection = BlockingConnection(self.parameters)
         except AMQPConnectionError:
@@ -79,35 +86,37 @@ class MessageService(Thread):
 
         # Metodos e Paths da API disponiveis para Requisições externas
         METHODS = ['GET', 'PUT']
-        API_VERSION = PREFIX_API_VERSION
-        SENSORS = API_VERSION + '/sensors'
-        PATTERN_PATH = re.compile(r'(' + SENSORS + '$)|(' + 
+        SENSORS = PREFIX_API_VERSION + '/sensors'
+        PATTERN_PATH_GET = re.compile(r'(' + SENSORS + '$)|(' + 
                                          SENSORS + '/[\w]+$)|(' + 
                                          SENSORS + '/[\w]+/limiares$)')
+        
+        PATTERN_PATH_PUT = re.compile(r'(' + SENSORS + '/[\w]+/limiares$)')
 
-
-        logger.debug("Pattern %s" % PATTERN_PATH)
-
-        match = bool(re.match(PATTERN_PATH, path))
-        logger.debug("Match %s" % match)
-
-        if not match:
-            msg = ('Path %s invalida' % path)
-            response_body = {'Error': msg}
-            return response_body, 400
+        url = 'http://localhost:' + str(API_PORT) + path
 
         if method not in METHODS:
             msg = ('Method %s invalido' % method)
             response_body = {'Error': msg}
             return response_body, 400
-        
-        url = 'http://localhost:' + str(API_PORT) + path
-
-        if method == 'GET':
+        elif method == 'GET':
+            match = bool(re.match(PATTERN_PATH_GET, path))    
+            logger.debug("Match %s" % match)
+            if not match:
+                msg = ('Path %s invalida' % path)
+                response_body = {'Error': msg}
+                return response_body, 400
+            
             response = get(url)
             response_body = response.json()
-
         elif method == 'PUT':
+            match = bool(re.match(PATTERN_PATH_PUT, path))    
+            logger.debug("Match %s" % match)
+            if not match:
+                msg = ('Path %s invalida' % path)
+                response_body = {'Error': msg}
+                return response_body, 400
+
             request_body_json = json.loads(body)
             logger.debug("body_json = %s" % request_body_json)
             response = put(url,json=request_body_json)

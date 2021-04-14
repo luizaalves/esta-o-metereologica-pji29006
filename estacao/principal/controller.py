@@ -24,10 +24,10 @@ class AppController:
         self.modules = {}
         self.grandezas = {}
 
+        self.load_all() 
+        self.notification_service = None
         self.__start_services()
-        self.load_all()       
-            
-
+              
     def add_module(self, new_module: Module) -> int:
         id_new_module = new_module.id_module.lower()
         if id_new_module in self.modules:
@@ -94,7 +94,7 @@ class AppController:
                 new_sensor.save_db()
                 limiar.save_db()
             logger.info('Gravando novo Sensor (id_sensor=%s) na Estação' % (id_sensor))
-            if (len(self.sensores) == 1) and NOTIFICATION_START:
+            if (len(self.sensores) == 1) and self.notification_service:
                 self.notification.start()
             return result_verify
         return result_verify
@@ -150,8 +150,6 @@ class AppController:
         self.__load_grandezas()
         self.__load_sensors()
         self.__load_limiares()
-        if self.sensores and NOTIFICATION_START:
-            self.notification_service.start()
             
     def __load_modules(self):
         logger.info('Carregando Modulos cadastrados')
@@ -212,3 +210,6 @@ class AppController:
                 self.notification_service = NotificationService(self.read_interval, self)
             except AMQPConnectionError:
                 logger.error("Erro ao iniciar Broker Channel. Verifique configurações e reinicie o serviço!")
+            else:
+                if self.sensores and NOTIFICATION_START:
+                    self.notification_service.start()

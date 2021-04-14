@@ -36,5 +36,5 @@ if __name__ == '__main__':
     #   estacao.load_all()
     app.config['DEBUG'] = True
     app.logger.level = logging.DEBUG
-    app.run()
+    app.run(use_reloader=False)
     

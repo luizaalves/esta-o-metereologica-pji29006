@@ -24,7 +24,8 @@ class AppController:
         self.modules = {}
         self.grandezas = {}
 
-        self.load_all() 
+        if self.backup:
+            self.load_all() 
         self.notification_service = None
         self.__start_services()
               

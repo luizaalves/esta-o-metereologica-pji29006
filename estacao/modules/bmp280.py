@@ -11,7 +11,7 @@ class BMP280(IModule):
         elif type_grandeza.upper() == "Pressure":
             return randint(300,3000)
         else:
-            return randint(0,50)
+            return False
     
     def start(self):
         print("Iniciando {}".format(self.__class__))

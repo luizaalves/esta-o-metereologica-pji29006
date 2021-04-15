@@ -32,7 +32,7 @@ class AppController:
         id_new_module = new_module.id_module.lower()
         if id_new_module in self.modules:
             return 2
-        new_module.id_module = id_new_module
+        new_module.id_module = id_new_module # Alterando id para minusculo para inserir no dicionario
         try:
             new_module.driver = ModulesAvailable.get_instance(id_new_module)
         except Exception as e:
@@ -40,12 +40,11 @@ class AppController:
             logger.error('O Módulo %s não está implementado ou nome da classe está incorreto' % id_new_module)
             return 3
 
+        logger.info('Adicionando novo Módulo (id_module=%s) na Estação' % id_new_module)
         self.modules[id_new_module] = new_module
-        #TODO - Inserir lógica para fazer download do script python referente ao módulo
         if self.backup:
             logger.info('Salvando novo Módulo (id_module=%s) no banco' % id_new_module)
             new_module.save_db()
-        logger.info('Adicionando novo Módulo (id_module=%s) na Estação' % id_new_module)
         return 1
 
     def change_module(self, change_module: Module) -> bool:
@@ -53,9 +52,8 @@ class AppController:
         if not id_change_module in self.modules:
             logger.debug('id_module %s não existe' % id_change_module)
             return False
-        change_module.id_module = id_change_module
+        change_module.id_module = id_change_module # Alterando id para minusculo para alterar no dicionario
         self.modules[id_change_module] = change_module
-        #TODO - Inserir lógica para alterar script python referente ao módulo
         if self.backup:
             logger.info('Salvando Alteração do Módulo (id_module=%s) no banco' % id_change_module)
             module = Module.find_by_id(id_change_module)
@@ -80,11 +78,11 @@ class AppController:
         result_verify = self.__verify_sensor(new_sensor)
         if result_verify == 1:
             id_sensor = new_sensor.id_sensor.lower()
-            #new_sensor.module = ModulesAvailable.get_instance(new_sensor.id_module)
             id_module = new_sensor.id_module.lower()
             module_driver = self.modules.get(id_module).driver
             logger.debug('Link module %s ao sensor' % (module_driver))
             new_sensor.module_driver = module_driver
+            #Alterar lógica para limiares iniciais - por enquanto está sendo inserido (0, 100)
             limiar = Limiar(id_sensor)
             new_sensor.id_sensor = id_sensor
             self.sensores[id_sensor] = new_sensor
@@ -95,7 +93,7 @@ class AppController:
                 limiar.save_db()
             logger.info('Gravando novo Sensor (id_sensor=%s) na Estação' % (id_sensor))
             if (len(self.sensores) == 1) and self.notification_service:
-                self.notification.start()
+                self.notification_service.start()                
             return result_verify
         return result_verify
     
@@ -129,7 +127,7 @@ class AppController:
     def read_one(self, id_sensor: str) -> Medida:
         sensor = self.sensores.get(id_sensor.lower())
         logger.debug('Lendo Sensor %s' % id_sensor)
-        value_read = sensor.module_driver.read()
+        value_read = sensor.module_driver.read(sensor.type_grandeza)
         logger.debug('Valor %d lido para sensor %s' % (value_read,id_sensor))
         grandeza = self.grandezas.get(sensor.unit.lower())
         logger.debug('grandeza do sensor %s' % (grandeza))
@@ -202,6 +200,8 @@ class AppController:
                 self.message_service = MessageService()
             except AMQPConnectionError:
                 logger.error("Não foi possível criar o Serviço de Mensagens para requisições! Verifique configurações e reinicie o Serviço!")
+            except Exception: 
+                logger.error("FQDN do broker inválido. Verifique configurações e renicie o serviço.")
             else:
                 self.message_service.start()
 
@@ -210,6 +210,8 @@ class AppController:
                 self.notification_service = NotificationService(self.read_interval, self)
             except AMQPConnectionError:
                 logger.error("Erro ao iniciar Broker Channel. Verifique configurações e reinicie o serviço!")
+            except Exception:
+                logger.error("FQDN do broker inválido. Verifique configurações e renicie o serviço.")
             else:
                 if self.sensores and NOTIFICATION_START:
                     self.notification_service.start()

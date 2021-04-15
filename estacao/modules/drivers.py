@@ -11,10 +11,7 @@ class ModulesAvailable:
     @staticmethod
     def get_instance(id_module: str):
         module = id_module.upper()
-        if(module == "BMP180"):
-            from modules.bmp180 import BMP180
-            return BMP180()
-        elif(module == "DHT11"):
+        if(module == "DHT11"):
             from modules.dht11 import DHT11
             return DHT11()
         elif(module == "HDC1080"):

@@ -77,7 +77,10 @@ class MessageService(Thread):
             connection = BlockingConnection(self.parameters)
         except AMQPConnectionError:
             logger.error("Não foi possível estabelecer conexão com Broker. Verifique parâmetros em settings.py")
-            raise 
+            raise
+        except Exception as e:
+            logger.error(e)
+            raise
         else:
             self.channel = connection.channel()
             self.channel.queue_declare(queue=QUEUE_MESSAGES)

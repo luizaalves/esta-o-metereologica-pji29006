@@ -12,8 +12,8 @@ post_parser = reqparse.RequestParser()
 post_parser.add_argument('id_module', dest='id_module', location='json', required=True,
     help='Identificador do módulo é obrigatório - {error_msg}',
 )
-post_parser.add_argument('url_codigo_fonte', dest='url_codigo_fonte', location='json', required=True,
-    help='Campo url_codigo_fonte obrigatório - {error_msg}',
+post_parser.add_argument('grandezas_medidas', dest='grandezas_medidas', location='json',
+    help='Grandezas medidas pelo módulo - {error_msg}',
 )
 post_parser.add_argument('description', dest='description', location='json',
     help='Descrição do módulo - {error_msg}',
@@ -22,7 +22,7 @@ post_parser.add_argument('description', dest='description', location='json',
 
 modules_fields = {
     'id_module': fields.String,
-    'url_codigo_fonte': fields.String,
+    'grandezas_medidas': fields.String,
     'description': fields.String
 }
 error_fields = {
@@ -55,7 +55,7 @@ class ModulesAPI(Resource):
     def post(self):
         args = post_parser.parse_args()
 
-        new_module =  Module(args.id_module, args.url_codigo_fonte)
+        new_module =  Module(args.id_module, args.url_codigo_fonte, args.description)
         result = self.estacao.add_module(new_module)
         if result == 2:
             logger.warn("Erro ao inserir Modulo, id_module %s já existe" % new_module.id_module)

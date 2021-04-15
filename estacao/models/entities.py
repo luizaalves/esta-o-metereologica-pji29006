@@ -11,13 +11,13 @@ class Module(Base):
 
     id_module = Column(String, primary_key=True, unique=True, nullable=False)
     description = Column(String)
-    url_codigo_fonte = Column(String)
+    grandezas_medidas = Column(String)
 
-    def __init__(self, id_module: str, url_codigo_fonte: str, description=None):
+    def __init__(self, id_module: str, grandezas_medidas: str, description=None):
         self.id_module = id_module
         self.description = description
-        self.url_codigo_fonte = url_codigo_fonte
-        self.driver = IModule()                     # Instância do driver para o Sensor
+        self.grandezas_medidas = grandezas_medidas
+        self.driver = IModule()                     # Instância do driver para o Módulo
     
     def save_db(self):
         session.add(self)
@@ -134,10 +134,19 @@ class Limiar(Base):
     def __repr__(self):
         return 'Limiar("%s","%s","%s")' % (self.id_sensor,self.value_min, self.value_max)
 
-def add_module():
-    module = Module(id_module='BMP280', url_codigo_fonte='https', description='Módulo para sensor BMP280')
-    module.driver = ModulesAvailable.get_instance('BMP280')
-    session.add(module)
+def add_availables_modules():
+    bmp280 = Module(id_module='BMP280', grandezas_medidas='temperatura, pressure, altitude', description='Módulo para BMP280')
+    bmp280.driver = ModulesAvailable.get_instance('BMP280')
+    session.add(bmp280)
+    session.commit()
+
+def add_availables_grandezas():
+    temperatura_celsius = Grandeza('temperatura', 'celsius')
+    pressure_hpa = Grandeza('pressure', 'hpa')
+    altitude_metro = Grandeza('altitude', 'metro')
+    session.add(temperatura_celsius)
+    session.add(pressure_hpa)
+    session.add(altitude_metro)
     session.commit()
 
 if __name__ == "__main__":
@@ -146,5 +155,6 @@ if __name__ == "__main__":
     engine = create_engine(DB_URI,connect_args={'check_same_thread':False})
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-    add_module()
+    add_availables_modules()
+    add_availables_grandezas()
 

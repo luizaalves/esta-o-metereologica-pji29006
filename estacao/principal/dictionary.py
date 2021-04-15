@@ -11,6 +11,7 @@ class Unidade(Enum):
     porcent = '%'
     kelvin = 'K'
     pascal = 'Pa'
+    hectopascal = 'hPa'
 
     @staticmethod
     def has_key(str_unidade: str):

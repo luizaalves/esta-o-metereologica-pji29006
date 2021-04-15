@@ -46,8 +46,12 @@ class NotificationService(Thread):
                 if min_reached or max_reached:
                     logger.info("Limite atingido")
                     notification = Notification(id_sensor, medida)
-                    self.__create_connection()
-                    self.__notify(notification)
+                    try:
+                        self.__create_connection()
+                    except Exception:
+                        logger.error("FQDN inválido. Verifique configuração e reinicie o serviço.")
+                    else:
+                        self.__notify(notification)
     
     def __create_connection(self):
         logger.info("Conectando ao broker...")
@@ -55,6 +59,9 @@ class NotificationService(Thread):
             self.connection = BlockingConnection(self.parameters)
         except AMQPConnectionError:
             logger.error("Não foi possível estabelecer conexão com Broker. Verifique parâmetros em settings.py")
+            raise
+        except Exception as e:
+            logger.error(e)
             raise 
         else:
             self.channel = self.connection.channel()

@@ -188,9 +188,9 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 # Data Structures
 
 ## Module (object)
-+ `id_module`: `mDHT` (string, required) - Identificador do módulo de um tipo de sensor.
-+ `description`: `Módulo para sensor DHT11` (string) - Descrição do Módulo
-+ `url_codigo_fonte`: `http://example.com/DHT.py` (string,required) - URL para download do código fonte do módulo.
++ `id_module`: `bmp280` (string, required) - Identificador do módulo de um tipo de sensor.
++ `description`: `Módulo para DHT11` (string) - Descrição do Módulo/Driver
++ `grandezas_medidas`: `temperatura,pressure,altitude` (string) - Grandezas lidas pelo módulo separadas por vírgula.
 
 ## Sensor (object)
 + `id_sensor`: `dht11estufa` (string, required) - Identificador do Sensor.
@@ -229,7 +229,7 @@ API REST para efetuar a administração do Sistema Estação Metereológica loca
 
 ## BadRequestError Module (object)
 + Include BadRequest Error
-+ `description`: `Atributos obrigatórios - id_module e url_codigo_fonte` (string) - Descrição do erro.
++ `description`: `Atributo obrigatório - id_module` (string) - Descrição do erro.
 
 ## NotFoundError Module (object)
 + Include NotFound Error

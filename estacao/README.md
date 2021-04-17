@@ -241,7 +241,7 @@ Execute os seguintes passos para instalação do Módulo chamado `Stub`.
 	$ sudo ./update-modules.sh
 	```
 
-8. Acompanhe os Logs do serviço estação e caso não apresente nenhum erro siga as etapas do tutorial [Exemplos de Requisições][#exemplos-de-requsições] para adicionar o novo módulo na estação e configurar um Sensor.
+8. Acompanhe os Logs do serviço estação e caso não apresente nenhum erro siga as etapas do tutorial [Exemplos de Requisições](#exemplos-de-requisições) para adicionar o novo módulo na estação e configurar um Sensor.
 ---
 ## Exemplos de requisições
 

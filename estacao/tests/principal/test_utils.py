@@ -1,7 +1,7 @@
 from unittest import main, TestCase
 
-from estacao.utils import Grandeza
-from estacao.dictionary import Unidade
+from principal.utils import Grandeza
+from principal.dictionary import Unidade
 
 # Exemplo de como utilizar pytest com unittest
 
@@ -11,7 +11,7 @@ class TestGrandeza(TestCase):
 
     def test_type_unidade(self):
         expected = type(Unidade.celsius)
-        self.assertEqual(type(temperatura.unidade), expected)
+        self.assertEqual(type(temperatura.unit), expected)
 
 if __name__ == '__main__':
     main()

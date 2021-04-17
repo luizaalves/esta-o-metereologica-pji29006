@@ -20,7 +20,7 @@ class BMP280(IModule):
             return float("{:.2f}".format(self.bmp_i2c.altitude))
         else:
             return None
-
+    
     def start(self):
         try:
             # Create library object using our Bus I2C port

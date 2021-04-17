@@ -14,7 +14,7 @@ Este diretório contém o código-fonte do sistema estação meteorológica e al
   - [Módulo de Exemplo - Stub](#módulo-stub)
 - [Exemplos de Requisições](#exemplos-de-requisições)
   - [Adicionar Módulo na Estação](#adicionar-módulo-na-estação)
-  - [Adicionar Sensor na Estação](#adicionar-módulo-na-estação)
+  - [Adicionar Sensor na Estação](#adicionar-sensor-na-estação)
   - [Alterar Limiares de Sensor](#alterar-limiares-de-sensor)
 - [Exemplos de Clients para Fila de Mensagens (RabbitMQ)](#exemplos-de-clients-rabbitmq)
   - [Client para Notificações(Consumer)](#client-para-notificações) 
@@ -255,7 +255,7 @@ A requsições estarão disponíveis somente na rede local da Raspberry. Abaixo 
 $ curl http://127.0.0.1:5000/api/v1/modules -H "Content-Type: application/json" -d '{"id_module":"stub","description":"Módulo stub","grandezas_medidas":"temperatura,umidade"}'
 ```
 
-### Adicionar Sensor na Estação)
+### Adicionar Sensor na Estação
 
 ```bash
 $ curl http://127.0.0.1:5000/api/v1/sensors -H "Content-Type: application/json" -d '{"id_sensor":"stub-temperatura","type_grandeza":"temperatura","unit":"celsius","id_module":"stub","description":"sensor de temperatura do modulo Stub"}'

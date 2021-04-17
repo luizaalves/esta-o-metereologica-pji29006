@@ -12,7 +12,7 @@ Este diretório contém o código-fonte do sistema estação meteorológica e al
   - [Logs e comandos](#logs-e-comandos)
 - [Instalação de novos Módulos/Drivers para Sensores](#instalaçao-de-novos-módulos-para-sensores)
   - [Módulo de Exemplo - Stub](#módulo-stub)
-- [Exemplos de Requisições][#exemplos-de-requisições]
+- [Exemplos de Requisições](#exemplos-de-requisições)
   - [Adicionar Módulo na Estação](#adicionar-módulo-na-estação)
   - [Adicionar Sensor na Estação](#adicionar-módulo-na-estação)
   - [Alterar Limiares de Sensor](#alterar-limiares-de-sensor)

@@ -12,11 +12,13 @@ Este diretório contém o código-fonte do sistema estação meteorológica e al
   - [Logs e comandos](#logs-e-comandos)
 - [Instalação de novos Módulos/Drivers para Sensores](#instalaçao-de-novos-módulos-para-sensores)
   - [Módulo de Exemplo - Stub](#módulo-stub)
-- [Exemplos de Requisições][#exemplos-de-requsições]
+- [Exemplos de Requisições][#exemplos-de-requisições]
   - [Adicionar Módulo na Estação](#adicionar-módulo-na-estação)
   - [Adicionar Sensor na Estação](#adicionar-módulo-na-estação)
   - [Alterar Limiares de Sensor](#alterar-limiares-de-sensor)
-- [Exemplos de Clients para Fila de Mensagens (RabbitMQ)][#exemplos-de-clients-RabbitMQ]
+- [Exemplos de Clients para Fila de Mensagens (RabbitMQ)](#exemplos-de-clients-rabbitmq)
+  - [Client Notifications (Consumer)](#client-notifications) 
+  - [Client Request (RPC)](#client-requests) 
 ---
 ## Implantação
 ### Requisitos
@@ -241,7 +243,7 @@ Execute os seguintes passos para instalação do Módulo chamado `Stub`.
 
 8. Acompanhe os Logs do serviço estação e caso não apresente nenhum erro siga as etapas do tutorial [Exemplos de Requisições][#exemplos-de-requsições] para adicionar o novo módulo na estação e configurar um Sensor.
 ---
-## Exemplos de requsições
+## Exemplos de requisições
 
 A requsições estarão disponíveis somente na rede local da Raspberry. Abaixo seguem 3 requsições executas após instalar o módulo seguindo o tutorial [Instalação de novos Módulos/Drivers para Sensores](#instalaçao-de-novos-módulos-para-sensores). Para mais informações de como administrar o sistema estação consulte a [documentação](https://estacao.docs.apiary.io/) da API REST.
 

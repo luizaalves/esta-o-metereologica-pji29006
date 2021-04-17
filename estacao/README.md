@@ -33,9 +33,9 @@ Este diretório contém o código-fonte do sistema estação meteorológica e al
 1. Faça o download do repositório do projeto na versão mais atual e acesse o diretório.
 
    ```bash
-   $ git clone -b estacao-v2.1.0 --single-branch https://github.com/PJI29006-classroom/2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza.git estacao-v2.1.0 
+   $ git clone -b estacao-v3.0.0 --single-branch https://github.com/PJI29006-classroom/2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza.git estacao-v3.0.0 
    
-   $ cd ./estacao-v2.1.0
+   $ cd ./estacao-v3.0.0
    ```
 
 
@@ -116,9 +116,9 @@ Caso você já tenha executado a instalação de alguma versão anterior do sist
 1. Faça o download do repositório do projeto na versão mais atual e acesse o diretório.
 
 	```bash
-	$ git clone -b estacao-v2.1.0 --single-branch https://github.com/PJI29006-classroom/2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza.git estacao-v2.1.0
+	$ git clone -b estacao-v3.0.0 --single-branch https://github.com/PJI29006-classroom/2020-01-estacao-metereologica-estacao-alexandre-andre-e-luiza.git estacao-v3.0.0
 	
-	$ cd ./estacao-v2.1.0
+	$ cd ./estacao-v3.0.0
 	```
 
 2. Execute o script para atualização do Sistema Estação.

@@ -35,5 +35,8 @@ class MedidasAPI(Resource):
             error = NotFoundError(notfound_description)
             return marshal(error, error_fields, 'error'), 404
         medida = self.estacao.read_one(sensor_id)
+        if medida is None:
+            error = InternalServerError(internalserver_description)
+            return marshal(error, error_fields, 'error'), 500
         logger.debug(medida) 
         return marshal(medida, medida_fields), 200

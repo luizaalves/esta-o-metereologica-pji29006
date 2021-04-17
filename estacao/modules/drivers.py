@@ -15,9 +15,10 @@ class ModulesAvailable:
         if module == "BMP280":
             from modules.bmp280 import BMP280
             return BMP280()
+        #descomente e altere para novos módulos
         #elif module == "EXAMPLE":
-        #    from modules.example import EXAMPLE
-        #    return EXAMPLE()
+        #    from modules.example import Example
+        #    return Example()
         else:
             logger.error('Não foi possível instanciar driver para módulo %s' % module)
             raise Exception("NotImplementedException - Driver não implementado")

@@ -3,15 +3,26 @@ from random import randint
 
 class Example(IModule):
     def __init__(self):
-        self.active = True
-       
+        self.active = False
+        # Adicionar propriedades necessárias para o Modulo
+
     def read(self, type_grandeza: str):
-        if type_grandeza.upper() == "Temperatura":
-            return randint(0,100)
-        elif type_grandeza.upper() == "Pressure":
-            return randint(300,3000)
+        grandeza = type_grandeza.lower()
+        if grandeza == "temperatura":
+            return float("{:.2f}".format(randint(0,100)))
+        elif grandeza == "umidade":
+            return float("{:.2f}".format(randint(0,100)))
         else:
-            return randint(0,50)
-    
+            raise Exception("Grandeza %s não suportado pelo Modulo" % grandeza)
+
     def start(self):
-        print("Iniciando {}".format(self.__class__))
+        try:
+            # Configurações relacionadas ao módulo físico
+            # Portas GPIO, Intefaces (I2C, SPI)
+            print("Módulo conectado a GPIO 7")
+        except Exception as e:
+            raise e
+        else:
+             # Configuração para iniciar/ativar módulo
+             print("Ativação do Módulo Example")
+             self.active = True

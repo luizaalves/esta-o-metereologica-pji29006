@@ -137,13 +137,19 @@ class AppController:
         logger.debug('Lendo Sensor %s' % id_sensor)
         if not sensor.module_driver.active:
             return None
-        value_read = sensor.module_driver.read(sensor.type_grandeza)
-        logger.debug('Valor %d lido para sensor %s' % (value_read,id_sensor))
-        grandeza = self.grandezas.get(sensor.unit.lower())
-        logger.debug('grandeza do sensor %s' % (grandeza))
-        medida = Medida(value_read, grandeza)
-        logger.debug('Medida do sensor %s' % (medida))
-        return medida
+        try:
+            value_read = sensor.module_driver.read(sensor.type_grandeza)
+            logger.debug('Valor %d lido para sensor %s' % (value_read,id_sensor))
+        except Exception as e:
+            logger.error(e)
+            logger.error('Não foi possível efetuar leitura da grandeza %s no modulo %s' %(sensor.type_grandeza,sensor.id_module))
+        else:
+            grandeza = self.grandezas.get(sensor.unit.lower())
+            logger.debug('grandeza do sensor %s' % (grandeza))
+            medida = Medida(value_read, grandeza)
+            logger.debug('Medida do sensor %s' % (medida))
+            return medida
+        return None
 
     def read_all(self) -> dict:
         medidas = {}

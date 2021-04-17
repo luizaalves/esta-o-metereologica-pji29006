@@ -15,36 +15,52 @@ API_DEBUG = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DB_PATH
 
-# Ativação dos Serviços de Mensagens para requisições(MESSAGE) ou Notificações(NOTIFICATION)
+## Ativação dos Serviços 
+# Mensagens para requisições(MESSAGE) ou Notificações(NOTIFICATION).
+# Altere para False se não deseja utilizar um dos (ou os dois) Serviços.
 SERVICE_MESSAGE = True
 SERVICE_NOTIFICATION = True
 
-# Altere para informações do Servidor de Fila de Mensagens (Broker)
-# Projeto utiliza o broker do RabbitMQ
+## Configurar informações de conexão com o broker.
 RABBIT_SERVER = {
-    'HOST' : 'FQDN.broker',              # FQDN ou IP do servidor.
-    'PORT' : 5672,                       # Porta para conexão, padrão do RabbitMQ é 5672.
-    'USER' : 'user',                     # Usuário do servidor de mensagens.
-    'PASS' : 'password'                  # Senha do Usuário informando.
+	'HOST' : 'IP ou FQDN do broker',
+	'PORT' : Porta_do_broker,
+	'USER' : 'User',
+	'PASS' : 'Password'
 }
-EXCHANGE_NOTIFICATIONS='notifications'   # Exchange do Servidor RabbitMQ para envio das notificações (Publish/Subscribe).
-EXCHANGE_TYPE='fanout'                   # Tipo de Exchange do servidor RabbitMQ (Publish/Subscribe).
-ROUTING_KEY_NOTIFICATIONS=''             # Routing Key do servidor - Default ''
-INTERVAL=5                               # Periodicidade para serviço de notificação ler sensores em segundos.
 
+## Configurar informações da Fila de Notificações
 
-QUEUE_MESSAGES='rpc_queue'               # Nome da fila para requisições via RPC do RabbitMQ (RPC).
-EXCHANGE_MESSAGES=''                     # Exchange do Servidor RabbitMQ para Serviço de Mensagens (RPC).
+# Exchange RabbitMQ para envio das notificações (Pub/Subs).
+EXCHANGE_NOTIFICATIONS='notifications'
+# Tipo de Exchange do servidor RabbitMQ (Publish/Subscribe).
+EXCHANGE_TYPE='fanout'
+# Routing Key do servidor - Default ''
+ROUTING_KEY_NOTIFICATIONS=''
+# Periodicidade (segundos) para serviço de notificação ler sensores.
+INTERVAL=5                               
+
+## Configurar informações da Fila de requisições
+
+# Nome da fila para requisições via RPC do RabbitMQ (RPC).
+QUEUE_MESSAGES='rpc_queue'
+# Exchange RabbitMQ para envio das requsições (RPC).
+EXCHANGE_MESSAGES='' 
 
 ## Configurações do Modulo/driver BMP280 padrão
 
 # Verificar endereço da interface na Rasp - sudo i2cdetect -y 1
-# Se o comando acima não retornar nada é possível que a interface I2C na rasp não esteja habilitada.
-# Para habilitar execute - sudo raspi-config - e escolha as opções 5 e P5.
-I2C_ADDRESS = 0x76                       # Algumas placas o endereço é 0x77
-SEA_LEVEL_PRESSURE = 1020.00             # Pressao nivel do mar em Florianopolis
-USE_BMP280=True                          # Informe True se deseja utilizar o módulo BMP280 implementado por padrão.
+# Se o comando acima não retornar nada é possível que a interface 
+# I2C na rasp não esteja habilitada.
+# Para habilitar execute - sudo raspi-config - 
+# e escolha as opções 5 e P5.
 
+# Algumas placas o endereço é 0x77
+I2C_ADDRESS = 0x76
+# Pressao nivel do mar em Florianopolis
+SEA_LEVEL_PRESSURE = 1020.00 
+# True para utilizar o módulo BMP280 implementado por padrão.
+USE_BMP280=True 
 
 
 

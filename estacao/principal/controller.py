@@ -39,6 +39,13 @@ class AppController:
             logger.error(e)
             logger.error('O Módulo %s não está implementado ou nome da classe está incorreto' % id_new_module)
             return 3
+        
+        try:
+            new_module.driver.start()
+        except Exception as e:
+            logger.error(e)
+            logger.error('Não foi possível iniciar o Modulo %s. Verifique se a interface I2C está habilitada ou se o endereço da I2C na Rasp está configurado corretamente em settings.py e reinicie o serviço' % id_new_module)
+            return 4
 
         logger.info('Adicionando novo Módulo (id_module=%s) na Estação' % id_new_module)
         self.modules[id_new_module] = new_module
@@ -127,6 +134,8 @@ class AppController:
     def read_one(self, id_sensor: str) -> Medida:
         sensor = self.sensores.get(id_sensor.lower())
         logger.debug('Lendo Sensor %s' % id_sensor)
+        if not sensor.module_driver.active:
+            return None
         value_read = sensor.module_driver.read(sensor.type_grandeza)
         logger.debug('Valor %d lido para sensor %s' % (value_read,id_sensor))
         grandeza = self.grandezas.get(sensor.unit.lower())
@@ -139,7 +148,9 @@ class AppController:
         medidas = {}
         for sensor in self.sensores.values():
             sensor_id = sensor.id_sensor.lower()
-            medidas[sensor_id] = self.read_one(sensor_id)
+            sensor_medida = self.read_one(sensor_id)
+            if sensor_medida is not None:
+                medidas[sensor_id] = self.read_one(sensor_id)
         return medidas
     
     def load_all(self):
@@ -154,7 +165,15 @@ class AppController:
         list_modules = Module.find_by_all()
         for module in list_modules:
             module.driver = ModulesAvailable.get_instance(module.id_module)
-            self.modules[module.id_module.lower()] = module
+            try:
+                module.driver.start()
+            except Exception as e:
+                logger.error(e)
+                logger.error('Não foi possível iniciar o Modulo BMP280 padrao.')
+                logger.error('Verifique se a interface I2C está habilitada ou se o endereço da I2C na Rasp está configurado corretamente em settings.py')
+                logger.warning('Após corrigir configuração reinicie o serviço')
+            else:
+                self.modules[module.id_module.lower()] = module
     
     def __load_grandezas(self):
         logger.info('Carregando Grandezas cadastradas')

@@ -3,6 +3,12 @@ from modules.drivers import ModulesAvailable
 from principal.db import session
 from sqlalchemy import Column, Integer, String, Float, event
 from sqlalchemy.ext.declarative import declarative_base
+from settings import USE_BMP280
+import logging, logging.config
+from settings import LOGGING_CONF as CONF
+
+logging.config.fileConfig(fname=CONF)
+logger = logging.getLogger(__name__)
 
 Base = declarative_base()
 
@@ -137,12 +143,20 @@ class Limiar(Base):
 def add_availables_modules():
     bmp280 = Module(id_module='BMP280', grandezas_medidas='temperatura, pressure, altitude', description='Módulo para BMP280')
     bmp280.driver = ModulesAvailable.get_instance('BMP280')
-    session.add(bmp280)
-    session.commit()
+    try:
+        bmp280.driver.start()
+    except Exception as e:
+        logger.error(e)
+        logger.error('Não foi possível iniciar o Modulo BMP280 padrao.')
+        logger.error('Verifique se a interface I2C está habilitada ou se o endereço da I2C na Rasp está configurado corretamente em settings.py')
+        logger.warning('Após corrigir configuração execute o script novamente.')
+    else:
+        session.add(bmp280)
+        session.commit()
 
 def add_availables_grandezas():
     temperatura_celsius = Grandeza('temperatura', 'celsius')
-    pressure_hpa = Grandeza('pressure', 'hpa')
+    pressure_hpa = Grandeza('pressure', 'hectopascal')
     altitude_metro = Grandeza('altitude', 'metro')
     session.add(temperatura_celsius)
     session.add(pressure_hpa)
@@ -155,6 +169,7 @@ if __name__ == "__main__":
     engine = create_engine(DB_URI,connect_args={'check_same_thread':False})
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-    add_availables_modules()
-    add_availables_grandezas()
+    if USE_BMP280:
+        add_availables_modules()
+        add_availables_grandezas()
 

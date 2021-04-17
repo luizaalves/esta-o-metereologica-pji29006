@@ -30,8 +30,4 @@ fi
 echo "Instalando requisitos da aplicação"
 echo "Atenção! Esta etapa pode demorar alguns minutos....."
 ${ESTACAO_VENV}/bin/pip3 install -r ${ESTACAO_HOMEDIR}/requirements.txt
-
-export PYTHONPATH="${PYTHONPATH}:${ESTACAO_HOMEDIR}"
-
-echo "Criando banco de dados para backup das informações..."
-${ESTACAO_VENV}/bin/python ${ESTACAO_HOMEDIR}/models/entities.py
+${ESTACAO_VENV}/bin/pip3 install -r ${ESTACAO_HOMEDIR}/modules/requirements.txt

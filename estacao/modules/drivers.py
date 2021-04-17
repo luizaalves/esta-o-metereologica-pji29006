@@ -1,7 +1,8 @@
 from modules.interfaces import IModule
 import logging, logging.config
+from settings import LOGGING_CONF as CONF
 
-logging.config.fileConfig(fname='logging.ini')
+logging.config.fileConfig(fname=CONF)
 logger = logging.getLogger(__name__)
 
 
@@ -11,18 +12,12 @@ class ModulesAvailable:
     @staticmethod
     def get_instance(id_module: str):
         module = id_module.upper()
-        if(module == "DHT11"):
-            from modules.dht11 import DHT11
-            return DHT11()
-        elif(module == "HDC1080"):
-            from modules.hdc1080 import HDC1080
-            return HDC1080()
-        elif(module == "PIR"):
-            from modules.pir import PIR
-            return PIR()
-        elif(module == "BMP280"):
+        if module == "BMP280":
             from modules.bmp280 import BMP280
             return BMP280()
+        #elif module == "EXAMPLE":
+        #    from modules.example import EXAMPLE
+        #    return EXAMPLE()
         else:
             logger.error('Não foi possível instanciar driver para módulo %s' % module)
             raise Exception("NotImplementedException - Driver não implementado")

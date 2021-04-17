@@ -55,7 +55,7 @@ class ModulesAPI(Resource):
     def post(self):
         args = post_parser.parse_args()
 
-        new_module =  Module(args.id_module, args.url_codigo_fonte, args.description)
+        new_module =  Module(args.id_module, args.grandezas_medidas, args.description)
         result = self.estacao.add_module(new_module)
         if result == 2:
             logger.warn("Erro ao inserir Modulo, id_module %s já existe" % new_module.id_module)
@@ -63,6 +63,10 @@ class ModulesAPI(Resource):
             return marshal(error, error_fields, 'error'), 409
         elif result == 3:
             logger.error("Erro ao instanciar Módulo")
+            error = InternalServerError(internalserver_description)
+            return marshal(error, error_fields, 'error'), 500
+        elif result == 4:
+            logger.error("Erro ao Iniciar Módulo/Driver")
             error = InternalServerError(internalserver_description)
             return marshal(error, error_fields, 'error'), 500
         return  marshal(new_module, modules_fields), 201

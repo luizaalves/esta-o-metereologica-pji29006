@@ -12,7 +12,8 @@
 5. [Diagramas de sequência.](./markdown/5-diagrama-sequencia.md)
 
 **Utilização Sistema Estação**
-1. [Doc API REST](https://estacao.docs.apiary.io/#) (Documentada com API Blueprint - [arquivo fonte](../sistema-estacao/api/apiary.apib))
+1. [Doc API REST](https://estacao.docs.apiary.io/#) (Documentada com API Blueprint - [arquivo fonte](../estacao/api/apiary.apib))
+2. [Tutoriais de Instalação e Administração](../estacao/README.md)
 
 **Utilização Sistema Servidor**
 1. [Como efetuar leitura atual de um Sensor.]()

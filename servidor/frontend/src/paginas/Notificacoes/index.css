@@ -1,0 +1,17 @@
+/* Personalizando listagem de notificacoes */
+
+ul.listar-notificacoes {
+    width: 100%;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    margin-bottom: 30px;
+}
+
+/*Listar cada item da listagem com informações uma embaixo da outra */
+
+ul.listar-notificacoes li{
+    display: flex;
+    flex-direction: column;
+}

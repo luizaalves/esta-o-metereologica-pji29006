@@ -19,10 +19,10 @@
 
 ### Requisitos não funcionais (RNF): ###
 
-**RNF.01 -** As funcionalidades do sistema devem ser acessadas através de uma API REST;
+**RNF.01 -** As funcionalidades do sistema devem ser acessadas localmente através de uma API REST;
 
 **RNF.02 -** O sistema deve possuir módulos/drivers para os sensores:
-    - BMP180
+    - BMP280
     - HDC1080
     - DHT11
     - Presença PIR 
@@ -31,7 +31,7 @@
 
 ### Regras de negócio (RN): ###
 
-**RN.01 -** Somente sensor com módulo/driver previamente inserido poderá ser instalado;
+**RN.01 -** Somente sensor com módulo/driver previamente instalado e inserido poderá ser adicionado;
 
 **RN.02 -** Uma mesma grandeza poderá ser medida por mais de um sensor;
 

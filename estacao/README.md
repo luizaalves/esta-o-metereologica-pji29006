@@ -17,8 +17,8 @@ Este diretório contém o código-fonte do sistema estação meteorológica e al
   - [Adicionar Sensor na Estação](#adicionar-módulo-na-estação)
   - [Alterar Limiares de Sensor](#alterar-limiares-de-sensor)
 - [Exemplos de Clients para Fila de Mensagens (RabbitMQ)](#exemplos-de-clients-rabbitmq)
-  - [Client Notifications (Consumer)](#client-notifications) 
-  - [Client Request (RPC)](#client-requests) 
+  - [Client Notifications (Consumer)](#notifications-client) 
+  - [Client Request (RPC)](#requests-client) 
 ---
 ## Implantação
 ### Requisitos
@@ -276,7 +276,7 @@ Para facilitar os testes com os serviços de mensagens (requisições ou notific
 
 **Obs.:** Os clients utilizam as mesmas configurações que o sistema estação. Antes de executá-los verifique se as informações de conexão com a fila de mensagem estão corretas em `settings.py`.
 
-### Client Notifications
+### Notifications Client
 
 Execute os seguintes passos para executar o client que irá consumir as notificações geradas pelo sistema estação. 
 
@@ -295,7 +295,7 @@ $ python services/client_notifications.py
 
 3. Em outro terminal, altere o limiar de um dos sensores para verificar o recebimento de notificações.
 
-### Client Requests
+### Requests Client
 
 Execute os seguintes passos para executar o client que irá efetuar requisições ao sistema estação. 
 

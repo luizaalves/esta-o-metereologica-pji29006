@@ -9,7 +9,8 @@ else:
     LOGGING_CONF = 'logging.ini'
 
 PREFIX_API_VERSION = '/api/v1'
-API_PORT = 5000                         # Se alterar a Porta da API aqui, deve-se alterar no arquivo uwsgi.ini também.
+# Se alterar a Porta da API aqui, deve-se alterar no arquivo uwsgi.ini também.
+API_PORT = 5000                         
 API_DEBUG = False
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False

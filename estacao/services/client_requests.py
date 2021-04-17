@@ -1,5 +1,5 @@
 from services.client import Client
-import sys
+import sys, json
 
 client_rpc = Client()
 
@@ -12,7 +12,9 @@ endpoint = sys.argv[2]
 body = ''
 
 if len(sys.argv) > 3:
-    body = sys.argv[3]
+    body = json.loads(str(sys.argv[3]))
+
+print(body)
 
 print(" [x] Requesting")
 #body_put = {'value_min':10.0,'value_max':90.0}

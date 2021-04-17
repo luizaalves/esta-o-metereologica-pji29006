@@ -6,4 +6,3 @@ sqlalchemy
 pika
 requests
 uwsgi
-gunicorn

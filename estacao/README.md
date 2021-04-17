@@ -312,7 +312,7 @@ $ source venv/bin/activate
 		```
     - Exemplo PUT
 		```bash
-		$ python services/client_requests.py "PUT" "/api/v1/sensors/stub-temperatura/limiares" "{"value_min":0.0,"value_max":100.0}"
+		$ python services/client_requests.py "PUT" "/api/v1/sensors/stub-temperatura/limiares" '{"value_min":0.0,"value_max":100.0}'
 		```
 
 **OBS.:** As operações disponíveis via Client Requests são: 

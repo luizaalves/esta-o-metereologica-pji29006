@@ -2,7 +2,7 @@ import pika
 import uuid
 import logging, logging.config
 import json
-from settings import RABBIT_SERVER
+from settings import RABBIT_SERVER, QUEUE_MESSAGES, EXCHANGE_MESSAGES
 from pika import BlockingConnection, ConnectionParameters, PlainCredentials, BasicProperties
 
 class Client(object):
@@ -12,9 +12,9 @@ class Client(object):
         parameters = ConnectionParameters(RABBIT_SERVER['HOST'],RABBIT_SERVER['PORT'],credentials=credentials)
         self.connection = BlockingConnection(parameters)
         self.channel = self.connection.channel()
-        self.channel.queue_declare(queue='rpc_queue')
+        self.channel.queue_declare(queue=QUEUE_MESSAGES)
 
-        result = self.channel.queue_declare(queue='', exclusive=True)
+        result = self.channel.queue_declare(queue=EXCHANGE_MESSAGES, exclusive=True)
         self.callback_queue = result.method.queue
 
         self.channel.basic_consume(
@@ -32,8 +32,8 @@ class Client(object):
         self.response = False
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
-            exchange='',
-            routing_key='rpc_queue',
+            exchange=EXCHANGE_MESSAGES,
+            routing_key=QUEUE_MESSAGES,
             properties=BasicProperties(
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,

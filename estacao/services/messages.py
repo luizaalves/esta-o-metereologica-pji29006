@@ -91,10 +91,12 @@ class MessageService(Thread):
         METHODS = ['GET', 'PUT']
         SENSORS = PREFIX_API_VERSION + '/sensors'
         PATTERN_PATH_GET = re.compile(r'(' + SENSORS + '$)|(' + 
-                                         SENSORS + '/[\w]+$)|(' + 
-                                         SENSORS + '/[\w]+/limiares$)')
+                                         SENSORS + '/[\w-]+$)|(' + 
+                                         SENSORS + '/[\w-]+/limiares$)|(' +
+                                         SENSORS + '/[\w-]+/medidas$)')
+
         
-        PATTERN_PATH_PUT = re.compile(r'(' + SENSORS + '/[\w]+/limiares$)')
+        PATTERN_PATH_PUT = re.compile(r'(' + SENSORS + '/[\w-]+/limiares$)')
 
         url = 'http://localhost:' + str(API_PORT) + path
 

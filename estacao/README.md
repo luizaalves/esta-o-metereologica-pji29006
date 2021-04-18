@@ -14,6 +14,7 @@ Este diretório contém o código-fonte do sistema estação meteorológica e al
   - [Módulo de Exemplo - Stub](#módulo-stub)
 - [Exemplos de Requisições](#exemplos-de-requisições)
   - [Adicionar Módulo na Estação](#adicionar-módulo-na-estação)
+  - [Adicionar Grandeza na Estação](#adicionar-grandeza-na-estação)
   - [Adicionar Sensor na Estação](#adicionar-sensor-na-estação)
   - [Alterar Limiares de Sensor](#alterar-limiares-de-sensor)
 - [Exemplos de Clients para Fila de Mensagens (RabbitMQ)](#exemplos-de-clients-rabbitmq)
@@ -254,6 +255,30 @@ A requsições estarão disponíveis somente na rede local da Raspberry. Abaixo 
 ```bash
 $ curl http://127.0.0.1:5000/api/v1/modules -H "Content-Type: application/json" -d '{"id_module":"stub","description":"Módulo stub","grandezas_medidas":"temperatura,umidade"}'
 ```
+
+### Adicionar Grandeza na Estação
+
+Antes de adicionar o Sensor na Estação, é necessário incluir um tipo de grandeza e unidade a ser medida. Por padrão o sistem já possui as seguintes Grandeas cadastradas.
+* type_grandeza = temperatura, unit = celsius.
+* type_grandeza = pressure, unit = hectopascal.
+* type_grandeza = altitude, unit = metro.
+
+É possível verificar a lista de grandezas com a seguinte requisição.
+
+```bash
+$ curl http://127.0.0.1:5000/api/v1/grandezas -H "Accept: application/json"
+```
+
+Se a grandeza medida pelo Módulo ainda não estiver disponível, é necessário adicioná-la com a seguinte requisição.
+
+```bash
+$ curl http://127.0.0.1:5000/api/v1/grandezas -H "Content-Type: application/json" -d '{"type_grandeza":"Umidade","unit":"porcent"}'
+```
+
+**Obs.:** Estão disponíveis as seguintes unidades de medidas.
+* metro, segundo, celsius, kelvin, porcent, pascal, hectopascal. 
+
+A adição de novas unidades é feita diretamente no código editando o arquivo `/estacao/principal/dictionary.py`.
 
 ### Adicionar Sensor na Estação
 

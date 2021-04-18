@@ -139,7 +139,7 @@ class AppController:
             return None
         try:
             value_read = sensor.module_driver.read(sensor.type_grandeza)
-            logger.debug('Valor %d lido para sensor %s' % (value_read,id_sensor))
+            logger.debug('Valor %0.2f lido para sensor %s' % (value_read,id_sensor))
         except Exception as e:
             logger.error(e)
             logger.error('Não foi possível efetuar leitura da grandeza %s no modulo %s' %(sensor.type_grandeza,sensor.id_module))
@@ -157,7 +157,7 @@ class AppController:
             sensor_id = sensor.id_sensor.lower()
             sensor_medida = self.read_one(sensor_id)
             if sensor_medida is not None:
-                medidas[sensor_id] = self.read_one(sensor_id)
+                medidas[sensor_id] = sensor_medida
         return medidas
     
     def load_all(self):
@@ -192,8 +192,8 @@ class AppController:
         logger.info('Carregando Sensores cadastradas')
         list_sensors = Sensor.find_by_all()
         for sensor in list_sensors:
-            sensor.module_driver = self.modules.get(sensor.id_module).driver
-            self.sensores[sensor.id_sensor] = sensor
+            sensor.module_driver = self.modules.get(sensor.id_module.lower()).driver
+            self.sensores[sensor.id_sensor.lower()] = sensor
 
     def __load_limiares(self):
         logger.info('Carregando Limiares configurados')
@@ -239,5 +239,5 @@ class AppController:
             except Exception:
                 logger.error("FQDN do broker inválido. Verifique configurações e renicie o serviço.")
             else:
-                if self.sensores and NOTIFICATION_START:
+                if self.sensores:
                     self.notification_service.start()

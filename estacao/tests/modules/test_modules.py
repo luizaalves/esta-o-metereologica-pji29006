@@ -3,6 +3,7 @@ from modules.bmp280 import BMP280
 
 
 bmp = BMP280()
+bmp.start()
 class TestModuleBMP280(TestCase):
 
     def test_read_temperatura(self):

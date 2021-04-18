@@ -12,6 +12,9 @@ fi
 
 export PYTHONPATH="${PYTHONPATH}:${ESTACAO_HOMEDIR}"
 
+echo "Executando testes de unidades..."
+${ESTACAO_VENV}/bin/pytest ${ESTACAO_HOMEDIR}/tests
+
 echo "Criando banco de dados para backup das informações..."
 ${ESTACAO_VENV}/bin/python ${ESTACAO_HOMEDIR}/models/entities.py
 

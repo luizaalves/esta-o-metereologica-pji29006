@@ -5,7 +5,7 @@ ul.listar-notificacoes {
     list-style: none;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
+    grid-gap: 30px;
     margin-bottom: 30px;
 }
 
@@ -14,4 +14,16 @@ ul.listar-notificacoes {
 ul.listar-notificacoes li{
     display: flex;
     flex-direction: column;
+    background-color: rgb(112, 112, 112);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: small;
+}
+
+ul.listar-notificacoes li header{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+ul.listar-notificacoes li body{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
 }

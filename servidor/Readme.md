@@ -69,11 +69,23 @@ As mensagens são armazenadas em uma fila dentro do RabbitMQ, o limite deste arm
 
 Para estabelecer conexão através de rede externa:
 
-> ``` amqp://user:password@HOST:5672 ```
+> ``` amqp://user:password@dominio/IP:5672 ```
 
 Há um plugin instalado rodando na porta 15672, que permite visualização em tempo real da fila de mensagens em um navegador:
 
->  http://HOST:15672
+>  http://dominio/IP:15672
+
+Para instalar o Mensage broker basta digitar os comandos:
+
+> sudo apt-get install rabbitmq-server
+
+Para criar usuário e senha:
+
+> sudo rabbitmqctl add_user **```user```** **```password```**
+
+Tornar usuário como administrador:
+
+> sudo rabbitmqctl set_user_tags user administrator
 
 
 

@@ -11,7 +11,9 @@ mongoose.connect('mongodb+srv://omnistack:omnistack@omnistack.q0cn4.mongodb.net/
     useUnifiedTopology:true,
 });
 
-app.use(cors({})); //qualquer aplicação acesse a api ou origin:'http://localhost:3333'
+//Alterei o CORS pra testar
+//app.use(cors({}))    estava assim antes
+app.use(cors()); //qualquer aplicação acesse a api ou origin:'http://localhost:3333'
 //dizendo pro express que utiliza o formato json
 app.use(express.json());
 app.use(routes);

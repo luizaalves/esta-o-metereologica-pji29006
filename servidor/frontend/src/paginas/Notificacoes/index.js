@@ -71,10 +71,12 @@ export default function Notificacoes(){
                     {notificacoes.map(notificacao => (
                         <li key={notificacao.id_notify}>
                             <header><strong>O sensor {notificacao.id_sensor}</strong></header>
-                            Ultrapassou a {notificacao.type_grandeza} de {notificacao.value} da unidade {notificacao.unit} 
-                            no horário {notificacao.hora}
-                            
+                            <strong>---------------------------------------------------------------------------</strong>
+                            Ultrapassou o limiar de {notificacao.type_grandeza} com valor {notificacao.value} da unidade de medida [{notificacao.unit}] 
+                            <body>Horário {notificacao.hora}</body>
                         </li>
+                    
+
                     ))}
             </ul>
 
